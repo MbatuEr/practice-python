@@ -1,3 +1,5 @@
+import sys
+
 class Array:
     # Sorts a vector around a pivot.
     def DutchNationalFlag(self, pivot, nums):
@@ -33,7 +35,8 @@ class Array:
             carry = total // 2
 
         return ''.join(reversed(result))
-    
+
+    # Multiplies two large integers represented as vectors of their digits.
     def Multiply(self, v1, v2):
         n = len(v1)
         m = len(v2)
@@ -53,3 +56,85 @@ class Array:
 
         result[0] *= sign
         return result
+
+    # Check if it is possible to reach the last index of the array by jumping.
+    def CanReachEnd(self, vec):
+        furthest_reach, counter, i = 0,0,0
+        last_index = len(vec) - 1
+        
+        while i <= furthest_reach and furthest_reach < last_index:
+            temp = furthest_reach
+            furthest_reach = max(furthest_reach, vec[i] + i)
+            if temp != furthest_reach:
+                counter += 1
+            i += 1
+        
+        if furthest_reach >= last_index:
+            print("The minimum number of steps to reach the end : ", counter)
+        
+        return furthest_reach >= last_index
+
+    # Removes duplicate elements from a vector.
+    def RemoveDuplicates(self, vec):
+        removed = []
+        seen = set()
+        for i in vec:
+            if i not in seen:
+                seen.add(i)
+                removed.append(i)
+
+        return removed
+        # unique_elements = list(dict.fromkeys(vec)) // that'll do the same
+        # return unique_elements 
+
+    # Calculates the maximum profit that can be obtained by buying and selling a stock once.
+    def ProfitFromStock(self, stocklist):
+        lowest_price = sys.maxsize
+        max_profit = 0
+        for price in stocklist:
+            temp = price - lowest_price
+            if price < lowest_price:
+                lowest_price = price
+            max_profit = max(max_profit, temp)
+        
+        return max_profit
+    
+    # Finds all prime numbers less than a given key value.
+    def FindPrimeValues(self, key_value):
+        primes = []
+        for i in range(key_value - 1, 1, -1):  
+            is_prime = True
+            for j in range(2, int(i**0.5) + 1):
+                if i % j == 0:
+                    is_prime = False
+                    break
+            if is_prime:
+                primes.append(i)
+        primes.append(2)  
+        return primes
+    
+    # Rearranges one vector based on the permutation order.
+    def PermutingElements(self, vec1, vec2):
+        i = 0
+        while i < len(vec1):
+            vec1[i], vec1[vec2[i]] = vec1[vec2[i]], vec1[i]
+            temp = vec2[i]
+            vec2[i], vec2[temp] = vec2[temp], vec2[i]
+            i += 1
+
+    # Computes the next lexicographical permutation of the input vector.
+    def FindNextPermutation(self, vec):
+        s = len(vec) - 2
+        while s >= 0 and vec[s] >= vec[s + 1]:
+            s -= 1
+
+        if s == -1:
+            print("Original is the last permutation.")
+            return
+        
+        for i in range(len(vec) - 1, s, -1):
+            if vec[i] > vec[s]:
+                vec[i], vec[s] = vec[s], vec[i]
+                break
+
+        vec[s + 1:] = reversed(vec[s + 1:])

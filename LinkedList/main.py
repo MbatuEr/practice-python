@@ -12,7 +12,7 @@ if __name__ == "__main__":
     list.append(5)
     list.append(3)
 
-    # Find kth to last
+    # Find kth to last.
     print("\nOriginal list:")
     list.print_list()
 
@@ -24,14 +24,14 @@ if __name__ == "__main__":
         print(f"Error: {e}")
     print("-------------------------------------------------")
 
-    # Delete middle node
+    # Delete middle node.
     print("Deleting middle node...")
     list.delete_middle_node()
     print("\nList after deleting middle node:")
     list.print_list()
     print("-------------------------------------------------")    
 
-    # Partition
+    # Partition.
     print("\nOriginal list:")
     list.print_list()
     partition = int(input("\nEnter partition value: "))
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     list.print_list()
     print("-------------------------------------------------")
 
-    # Add numbers in reverse order
+    # Add numbers in reverse order.
     list1 = LinkedList()
     list1.append(3)
     list1.append(4)
@@ -60,13 +60,13 @@ if __name__ == "__main__":
     result.print_list()
     print("-------------------------------------------------")
 
-    # Add numbers in forward order
+    # Add numbers in forward order.
     result_forward = list.add_numbers_forward(list1.head, list2.head)
     print("The sum of the two lists in forward order is:")
     result_forward.print_list()
     print("-------------------------------------------------")
 
-    # Remove duplicates
+    # Remove duplicates.
     print("Original list:")
     list.print_list()
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     list.print_list()
     print("-------------------------------------------------")
 
-    # Check if list is palindrome
+    # Check if list is palindrome.
     list_palindrome = LinkedList()
     list_palindrome.append(3)
     list_palindrome.append(5)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     print("\nIs the list a Palindrome? " + ("Yes" if list_palindrome.is_palindrome() else "No"))
     print("-------------------------------------------------")
 
-    # find the first intersection node
+    # find the first intersection node.
     firstlist = Node(1)
     firstlist.next = Node(2)
     firstlist.next.next = Node(3)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         print("No intersection found")
     print("-------------------------------------------------")
 
-    # find the loop node
+    # find the loop node.
     loop_node = Node(1)
     loop_node.next = Node(2)
     loop_node.next.next = Node(3)

@@ -11,7 +11,7 @@ class LinkedList:
             del current
             current = next_node
     
-    # Append a new node to the end of the list
+    # Append a new node to the end of the list.
     def append(self,data):
         if not self.head:
             self.head = Node(data)
@@ -23,7 +23,7 @@ class LinkedList:
 
         current.next = Node(data)
 
-    # Print the list
+    # Print the list.
     def print_list(self):
         current = self.head
         while current:
@@ -31,7 +31,7 @@ class LinkedList:
             current = current.next
         print("None")
 
-    # Find kth to last element
+    # Find kth to last element.
     def find_kth_to_last(self, k):
         if not self.head:
             raise ValueError("List is empty")
@@ -50,7 +50,7 @@ class LinkedList:
         
         return second.data
 
-    # Delete middle node
+    # Delete middle node.
     def delete_middle_node(self):
         if not self.head or not self.head.next:
             print("List is too short to have a middle node")
@@ -68,7 +68,7 @@ class LinkedList:
             prev.next = slow.next
             del slow
 
-    # Partition
+    # Partition.
     def partition(self,x):
         if not self.head and not self.head.next:
             return
@@ -94,7 +94,7 @@ class LinkedList:
         del less_head
         del greater_head
 
-    # Reverse the list
+    # Reverse the list.
     def reverse(self, head):
         prev = None
         current = head
@@ -107,7 +107,7 @@ class LinkedList:
 
         return prev
 
-    # Add numbers in reverse order
+    # Add numbers in reverse order.
     def add_reverse_order(self, l1, l2):
         result = LinkedList()
         carry = 0
@@ -126,7 +126,7 @@ class LinkedList:
         result.head = self.reverse(result.head)
         return result
 
-    # Add numbers in forward order
+    # Add numbers in forward order.
     def add_numbers_forward(self, l1, l2):
         l1 = self.reverse(l1)
         l2 = self.reverse(l2)
@@ -136,7 +136,7 @@ class LinkedList:
 
         return reversed_result
         
-    # Remove duplicates
+    # Remove duplicates.
     def remove_duplicates(self):
         if not self.head:
             return
@@ -154,7 +154,7 @@ class LinkedList:
                 prev = current
             current = prev.next 
 
-    # check if the list is a palindrome
+    # check if the list is a palindrome.
     def is_palindrome(self):
         if not self.head or not self.head.next:
             return True # Empty or single element list is a palindrome
@@ -180,7 +180,7 @@ class LinkedList:
 
         return is_palindrome    
 
-    # to get the length of the list  
+    # to get the length of the list.
     def get_length(self, head):
         length = 0
         current = head
@@ -189,7 +189,7 @@ class LinkedList:
             current = current.next
         return length
 
-    # Find the intersection of two lists
+    # Find the intersection of two lists.
     def first_intersection(self, head1, head2):
         if not head1 or not head2:
             return None
@@ -213,7 +213,7 @@ class LinkedList:
 
         return None
     
-    # Detect loop in the list if any
+    # Detect loop in the list if any.
     def detect_loop(self, head):
         if not head or not head.next:
             return None

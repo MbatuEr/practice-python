@@ -66,3 +66,17 @@ if __name__ == "__main__":
     obj.FindNextPermutation(orig)
     print("Next permutation of the original array: ", orig)
     print("----------------------------------------------")
+
+    # Offline random sampling
+    samples = [3,4,10,21,13,38,56,89,22]
+    obj.OfflineRandomSampling(6, samples)
+    print("Sampled version: ", samples)
+    print("----------------------------------------------")
+
+    # Update array with probabilities
+    arr = [3,5,7,11]
+    probabilities = [9.0/18.0, 6.0/18.0, 2.0/18.0, 1.0/18.0]
+    size = 18
+    obj.UpdateArrayWithProbabilities(size, arr, probabilities)
+    print("Values multiplied with probabilities: ", arr)
+    print("----------------------------------------------")

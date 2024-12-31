@@ -1,4 +1,5 @@
 import sys
+import random
 
 class Array:
     # Sorts a vector around a pivot.
@@ -138,3 +139,19 @@ class Array:
                 break
 
         vec[s + 1:] = reversed(vec[s + 1:])
+
+    # Randomly selects a subset of a specified size from the input vector.
+    def OfflineRandomSampling(self, key, vec):
+        random.shuffle(vec)
+        vec[:] = vec[:key]
+        
+    # Updates an array's elements based on their associated probabilities.
+    def UpdateArrayWithProbabilities(self, size, input_array, probabilities):
+        updated_array, counts = [], []
+        counts = [round(prob * size) for prob in probabilities]
+        i = 0
+        for i, count in enumerate(counts):
+            updated_array.extend([input_array[i]] * count)
+        
+        input_array[:] = updated_array  
+        

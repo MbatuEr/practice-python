@@ -73,10 +73,53 @@ if __name__ == "__main__":
     print("Sampled version: ", samples)
     print("----------------------------------------------")
 
-    # Update array with probabilities
+    # Update array with probabilities.
     arr = [3,5,7,11]
     probabilities = [9.0/18.0, 6.0/18.0, 2.0/18.0, 1.0/18.0]
     size = 18
     obj.UpdateArrayWithProbabilities(size, arr, probabilities)
     print("Values multiplied with probabilities: ", arr)
     print("----------------------------------------------")
+
+    # Check if the sudoku board is valid.
+    board = [
+        [0, 3, 5, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+
+    is_sudoku_valid = obj.isValidSudoku(board)
+    print("Is the sudoku board valid?", is_sudoku_valid)
+    print("----------------------------------------------")
+
+    # Spiral order of array.
+    spiral_input = [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16]
+    ]
+    spiral_output = obj.SpiralOrderOfArray(spiral_input)
+    print("Array as in spiral order: ", spiral_output)
+    print("----------------------------------------------")
+
+    # Rotating 2D array.
+    rotate_input = [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12]
+    ]
+    rotated_array = obj.Rotating2DArray(rotate_input)
+    print("Rotated array : ")
+    for i in range(4):
+        print()  # Print a new line
+        for j in range(3):
+            print(rotated_array[i][j], end=" ")
+
+    print("\n----------------------------------------------")

@@ -154,4 +154,57 @@ class Array:
             updated_array.extend([input_array[i]] * count)
         
         input_array[:] = updated_array  
+    
+    def isValidSudoku(self,board):
+        row = len(board)
+        column = len(board[0])
+        for i in range(row):
+            row_set = set()
+            column_set = set()
+            for j in range(column):
+                if board[i][j] in row_set or board[j][i] in column_set:
+                    return False
+                if board[i][j] != 0:
+                    row_set.add(board[i][j])
+                if board[j][i] != 0:
+                    column_set.add(board[j][i])
         
+        return True
+
+    # Returns the elements of a 2D array in spiral order as a 1D vector.
+    def SpiralOrderOfArray(self, vec):
+        row = len(vec)
+        if row == 0:
+            return []
+        column = len(vec[0])
+        arr = []
+        top, bottom, left, right = 0, row - 1, 0, column - 1
+        while top <= bottom and left <= right:
+            for i in range(left, right + 1):
+                arr.append(vec[top][i])
+            top += 1
+            for i in range(top, bottom + 1):
+                arr.append(vec[i][right])
+            right -= 1
+            if top <= bottom:
+                for i in range(right, left - 1, -1):
+                    arr.append(vec[bottom][i])
+                bottom -= 1
+            if left <= right:
+                for i in range(bottom, top - 1, -1):
+                    arr.append(vec[i][left])
+                left += 1
+        return arr
+    
+    # Rotates a 2D array 90 degrees clockwise.
+
+    def Rotating2DArray(self, vec):
+        row = len(vec)
+        column = len(vec[0])
+        rotated = [[0] * row for _ in range(column)]
+
+        for i in range(row):
+            for j in range(column):
+                rotated[j][row - i - 1] = vec[i][j]
+        
+        return rotated

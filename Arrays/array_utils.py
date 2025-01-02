@@ -208,3 +208,66 @@ class Array:
                 rotated[j][row - i - 1] = vec[i][j]
         
         return rotated
+    
+    # Generates a specific row of Pascal's Triangle.
+    def GeneratePascalTriangle(self, n, row, column):
+        if column == 0 or row == 0:
+            return 1
+        pascal_triangle = [[0 for _ in range(column)] for _ in range(row)]
+        pascal_triangle[0][row - 1] = 1
+        result = [0] * column
+        
+        for i in range(row - 1):
+            for j in range(column - 1):
+                pascal_triangle[i+1][j] = pascal_triangle[i][j] + pascal_triangle[i][j+1]
+        
+        for i in range(column):
+            result[i] = pascal_triangle[n][i]
+        k = 0
+        while k < len(result):
+            if result[k] == 0:
+                    result.pop(k)
+            k += 1
+        
+        return result
+    
+    # Replaces spaces in a string with '%20'.
+    def ReplaceSpaces(self, str, true_length):
+        space_count = 0
+        for i in range(true_length):
+            if str[i] == ' ':
+                space_count += 1
+        
+        index = true_length + space_count * 2
+        str = list(str)
+        str += [''] * space_count * 2
+        for i in range(true_length - 1, -1, -1):
+            if str[i] == ' ':
+                str[index - 1] = '0'
+                str[index - 2] = '2'
+                str[index - 3] = '%'
+                index -= 3
+            else:
+                str[index - 1] = str[i]
+                index -= 1
+        return str
+
+    # Compresses a string using the counts of repeated characters.
+    def StringCompression(self, str):
+        compressed = []
+        count = 1
+        for i in range(len(str)):
+            if i + 1 < len(str) and str[i] == str[i+1]:
+                count += 1
+            else:
+                compressed.append(str[i])
+                compressed.append(count) 
+                count = 1
+
+        return compressed if len(compressed) < len(str) else str 
+    
+    # Checks if one string is a rotation of another string.
+    def isSubString(self, str1, str2):
+        if len(str1) < len(str2):
+            return False
+        return str1 in str2 + str2

@@ -123,3 +123,32 @@ if __name__ == "__main__":
             print(rotated_array[i][j], end=" ")
 
     print("\n----------------------------------------------")
+
+    # Generate pascal triangle.
+    n, row, column = 5, 7, 8
+    nth_row = obj.GeneratePascalTriangle(n, row, column)
+    print("The " f"{n}th row of the pascal triangle: ", nth_row)
+    print("----------------------------------------------")
+
+    # Replace spaces.
+    sentence = "Mr John Smith"
+    true_length = 13
+    replaced = obj.ReplaceSpaces(sentence, true_length)
+    print("Replaced sentence: ")
+    for i in replaced:
+        print(i,end="")
+    print("\n----------------------------------------------")
+
+    # String compression.
+    compressed = "aabcccccaaa"
+    compressed_string = obj.StringCompression(compressed)
+    print("The compressed string: ", compressed_string)
+    print("----------------------------------------------")
+
+    # Substring check.
+    s1 = "waterbottle"
+    s2 = "erbottlewat"
+    is_substring = obj.isSubString(s1, s2)
+    print("Is s2 a substring of s1? ", is_substring)
+    print("----------------------------------------------")
+    

@@ -268,6 +268,6 @@ class Array:
     
     # Checks if one string is a rotation of another string.
     def isSubString(self, str1, str2):
-        if len(str1) < len(str2):
+        if len(str1) != len(str2):
             return False
-        return str1 in str2 + str2
+        return str2 in str1 + str1

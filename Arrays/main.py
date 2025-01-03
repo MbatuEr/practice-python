@@ -149,6 +149,6 @@ if __name__ == "__main__":
     s1 = "waterbottle"
     s2 = "erbottlewat"
     is_substring = obj.isSubString(s1, s2)
-    print("Is s2 a substring of s1? ", is_substring)
+    print("Is s2 a rotation of s1? ", is_substring)
     print("----------------------------------------------")
     

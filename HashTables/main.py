@@ -69,3 +69,46 @@ if __name__ == "__main__":
     print("The longest subarray with distinct entries: ", " ".join(arr[longest_subarray[0]: longest_subarray[1] + 1]))
     print("------------------------------------------------------")  
 
+    # Longest Contained Interval.
+    input_array = [3, -2, 7, 9, 8, 1, 6, 0, -1, 5, 4]
+    length = obj.longestContainedInterval(input_array)
+    print("Length of the longest interval: ", length)
+    print("------------------------------------------------------")  
+
+    # Average of top three scores.
+    scores = [
+        ("John", 60), ("Jane", 90), ("John", 35), ("Jane", 20),
+        ("Jane", 50), ("Jack", 80), ("Jack", 95),
+        ("Aby", 100), ("Aby", 95), ("Aby", 80)
+    ]
+
+    name, avg = obj.averageOfTopThreeScores(scores)
+
+    if name:
+        print(f"{name} {avg:.2f}")
+    else:
+        print("No individual has at least three scores.")
+    print("------------------------------------------------------")
+
+    # String decompositions.
+    sentence = "amanaplanacandl"
+    words = ["nac", "ana", "pla"]
+
+    starting_index = obj.allStringDecompositions(sentence, words)
+    
+    if starting_index is not None:
+        print(f"Input: {sentence}")
+        print("All string decompositions: ", end="")
+    
+        for i in range(starting_index, starting_index + len(words) * len(words[0])):
+            print(sentence[i], end="")
+        print()
+    else:
+        print("No valid decomposition found.")
+    print("------------------------------------------------------")
+
+    # Collatz conjecture.
+    n = 1000000
+    result = obj.testCollatz(n)
+    print("Collatz conjecture holds for all numbers up to 1000000:", result)
+    print("------------------------------------------------------")

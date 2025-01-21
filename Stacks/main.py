@@ -1,41 +1,85 @@
-from setofstacks import SetofStacks
+from stacks import Stacks
+from stacks import PostingListNode
 
 if __name__ == "__main__":
-    try:
-        stacks = SetofStacks(3)
+    # Max value in the stack.
+    st = Stacks()
 
-        # Push elements
-        stacks.push(1)
-        stacks.push(2)
-        stacks.push(3)
-        stacks.push(4)
-        stacks.push(5)
-        stacks.push(6)
+    st.push(3)
+    st.push(5)
+    st.push(2)
+    st.push(7)
+    st.push(6)
 
-        print("Initial stacks:")
-        stacks.print_stacks()
+    print("Current max:", st.max())
+    st.pop()
+    print("Current max after pop:", st.max())
+    st.pop()
+    print("Current max after pop:", st.max())
+    print("-------------------------------------------------------")
 
-        # Pop an element
-        print(f"Popped: {stacks.pop()}")
+    # If the string well-formed.
+    formed = Stacks()
 
-        print("Stacks after pop:")
-        stacks.print_stacks()
+    test1 = "([]){()}"
+    test2 = "[()[]{()()}]"
+    test3 = "{)"
+    test4 = "[()[]{()()"
 
-        # Pop an element from a specific stack
-        print(f"Popped from stack 1: {stacks.pop_at(0)}")
+    print(f"Test 1: {'Well Formed' if formed.isWellFormed(test1) else 'Not Well Formed'}")
+    print(f"Test 2: {'Well Formed' if formed.isWellFormed(test2) else 'Not Well Formed'}")
+    print(f"Test 3: {'Well Formed' if formed.isWellFormed(test3) else 'Not Well Formed'}")
+    print(f"Test 4: {'Well Formed' if formed.isWellFormed(test4) else 'Not Well Formed'}")
+    print("-------------------------------------------------------")
 
-        print("Stacks after popAt(0):")
-        stacks.print_stacks()
+    # Simplified path.
+    simplified = Stacks() 
 
-    except Exception as e:
-        print(f"Error: {e}")
+    path1 = "/usr/bin/../bin/gcc"
+    path2 = "scripts//./../scripts/awkscripts/././"
+    path3 = "/a/./b/../../c/"
+    path4 = "/../"
+    path5 = "/home//foo/"
 
-    print("---------------------------------------------------")
+    print(f"Simplified Path 1: {simplified.simplifyPath(path1)}")
+    print(f"Simplified Path 2: {simplified.simplifyPath(path2)}")
+    print(f"Simplified Path 3: {simplified.simplifyPath(path3)}")
+    print(f"Simplified Path 4: {simplified.simplifyPath(path4)}")
+    print(f"Simplified Path 5: {simplified.simplifyPath(path5)}")
+    print("-------------------------------------------------------")
 
-    # Sorting a stack
-    s = [34, 3, 31, 98, 92, 23]
-    print("Original Stack:", s)
+    # Posting List.
+    L = PostingListNode()
+    a = PostingListNode()
+    b = PostingListNode()
+    c = PostingListNode()
+    d = PostingListNode()
 
-    SetofStacks.sort_stack(s)
+    L.next = a 
+    a.next = b 
+    b.next = c 
+    c.next = d
+    a.jump = c 
+    c.jump = b 
+    b.jump = d 
+    d.jump = None
 
-    print("Sorted Stack:", s)
+    print("Recursive Method:")
+    order = [0]
+    Stacks.setJumpOrderRecursive(L, order)
+    Stacks.printPostingList(L)
+    L.order = a.order = b.order = c.order = d.order = -1
+
+    print("\nIterative Method:")
+    Stacks.setJumpOrderIterative(L)
+    Stacks.printPostingList(L)
+    print("-------------------------------------------------------")
+
+    # Sunset view.
+    view = Stacks()
+    buildings = [7, 4, 8, 2, 9]
+    
+    result = view.findBuildingsWithSunsetView(buildings)
+
+    print("Buildings with sunset views (heights):", [buildings[i] for i in result])
+    print("-------------------------------------------------------")

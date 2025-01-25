@@ -5,18 +5,16 @@ if __name__ == "__main__":
     tree = BinaryTree()
 
     # Insertion, lookup and removal.
-    tree.insert(5)
-    tree.insert(3)
-    tree.insert(8)
-    tree.insert(1)
-    tree.insert(4)
+    items_to_insert = [10,5,15,3,7,12,10]
+    for values in items_to_insert:
+        tree.insert(values)
 
     print(tree.lookUp(3)) 
-    print(tree.lookUp(6)) 
-
+    print(tree.lookUp(7)) 
     print(tree.remove(3))  
     print(tree.lookUp(3))  
-    print(tree.remove(6))  
+    print(tree.remove(7))
+    print(tree.lookUp(7))  
     print("----------------------------------------------------------")
 
     # Check if the tree is symmetrical.
@@ -208,4 +206,13 @@ if __name__ == "__main__":
         print(f"The first key greater than {input_key} is {first_key}.")
     else:
         print(f"No key greater than {input_key} found.")
+    print("----------------------------------------------------------")
+
+    # Largest elements.
+    number_of_largest_items = 3
+    tree.largestElement(tree_order.root, number_of_largest_items)
+    print("\n----------------------------------------------------------")
+
+    # Level order tree traversal.
+    tree.levelOrderTraversal(tree_order.root)
     print("----------------------------------------------------------")

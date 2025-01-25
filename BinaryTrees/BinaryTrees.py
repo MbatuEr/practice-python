@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -460,4 +461,44 @@ class BinaryTree:
     def firstKeyGreater(self, input_value):
         result = self.firstKeyGreaterHelper(self.root, input_value, float('inf'))
         return -1 if result == float('inf') else result
-          
+
+    # Recursive function to get inorder traversal.
+    def recursiveInorderTraversal(self, root, result):
+        if not root: return result
+
+        self.recursiveInorderTraversal(root.left, result)
+
+        result.append(root.val)
+
+        self.recursiveInorderTraversal(root.right, result)
+
+        return result 
+
+    # Finds the k larger elements in a BST.
+    def largestElement(self, root, k):
+        if not root: return
+        largest_element = []
+        result = self.recursiveInorderTraversal(root, largest_element)
+
+        for i in range(len(result) - 1, len(result) - k - 1, -1):
+            print(result[i], end=" ")
+        
+    # Prints a binary tree in level-order.
+    def levelOrderTraversal(self, root):
+        if not root: return
+
+        q = deque([root])
+
+        while q:
+            levelsize = len(q)
+            current_level = []
+
+            for i in range(levelsize):
+                currentnode = q.popleft()
+                current_level.append(currentnode.val)
+
+                if currentnode.left: q.append(currentnode.left)
+                if currentnode.right: q.append(currentnode.right)
+            
+            print(" ".join(map(str, current_level)))
+            

@@ -5,7 +5,7 @@ if __name__ == "__main__":
     obj = Array()
     nums = [3, 5, 2, 1, 7, 3]
     pivot = 3
-    obj.DutchNationalFlag(pivot, nums)
+    obj.dutch_national_flag(pivot, nums)
 
     for num in nums:
         print(num, end=' ')
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     s1 = "101"
     s2 = "110"
 
-    result_string = obj.AddBinary(s1,s2)
+    result_string = obj.add_binary(s1,s2)
     for i in result_string:
         print(i, end=' ')
     print("\n----------------------------------------------")
@@ -23,13 +23,13 @@ if __name__ == "__main__":
     # Multiply two numbers
     num1 = [1, 2, 3]
     num2 = [9, 8, 7]
-    multiplied = obj.Multiply(num1, num2)
+    multiplied = obj.multiply(num1, num2)
     print("Result:", multiplied)
     print("----------------------------------------------")
 
     # Check if end is reachable.
     vec = [2,1,2,0,2,0,1,3,0,1,2,2,0,1]
-    final = obj.CanReachEnd(vec)
+    final = obj.can_reach_end(vec)
     print("The end is reachable? ")
     if final:
         print("Yes")
@@ -39,37 +39,37 @@ if __name__ == "__main__":
 
     # Remove duplicates
     duplicates = [3,2,1,5,2,3]
-    removed = obj.RemoveDuplicates(duplicates)
+    removed = obj.remove_duplicates(duplicates)
     print("Removed: ", removed)    
-    print("\n----------------------------------------------")
+    print("----------------------------------------------")
 
     # Profit from stock.
     stocklist = [310,325,275,295,260,270,290,330,355,350]
-    print("Highest profit for one buy and sell: ", obj.ProfitFromStock(stocklist))
+    print("Highest profit for one buy and sell: ", obj.profit_from_stock(stocklist))
     print("----------------------------------------------")
 
     # Find prime values.
     key_value = 122
-    prime_values = obj.FindPrimeValues(key_value)
+    prime_values = obj.find_prime_values(key_value)
     print("Prime values smaller than the key value: ", prime_values)
     print("----------------------------------------------")
 
     # Permute elements.
     original = [3,1,2,4,8,6,5,7]
     order_input = [2,0,1,3,7,5,4,6]
-    obj.PermutingElements(original, order_input)
+    obj.permuting_elements(original, order_input)
     print("Original array after permutation: ", original)
     print("----------------------------------------------")
 
     # Next permutation.
     orig = [3,4,0,2,1]
-    obj.FindNextPermutation(orig)
+    obj.find_next_permutation(orig)
     print("Next permutation of the original array: ", orig)
     print("----------------------------------------------")
 
     # Offline random sampling
     samples = [3,4,10,21,13,38,56,89,22]
-    obj.OfflineRandomSampling(6, samples)
+    obj.offline_sandom_sampling(6, samples)
     print("Sampled version: ", samples)
     print("----------------------------------------------")
 
@@ -77,11 +77,11 @@ if __name__ == "__main__":
     arr = [3,5,7,11]
     probabilities = [9.0/18.0, 6.0/18.0, 2.0/18.0, 1.0/18.0]
     size = 18
-    obj.UpdateArrayWithProbabilities(size, arr, probabilities)
+    obj.update_array_with_probabilities(size, arr, probabilities)
     print("Values multiplied with probabilities: ", arr)
     print("----------------------------------------------")
 
-    # Check if the sudoku board is valid.
+    # Validation of sudoku board.
     board = [
         [0, 3, 5, 0, 7, 0, 0, 0, 0],
         [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 8, 0, 0, 7, 9]
     ]
 
-    is_sudoku_valid = obj.isValidSudoku(board)
+    is_sudoku_valid = obj.is_valid_sudoku(board)
     print("Is the sudoku board valid?", is_sudoku_valid)
     print("----------------------------------------------")
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         [9, 10, 11, 12],
         [13, 14, 15, 16]
     ]
-    spiral_output = obj.SpiralOrderOfArray(spiral_input)
+    spiral_output = obj.spiral_order_of_array(spiral_input)
     print("Array as in spiral order: ", spiral_output)
     print("----------------------------------------------")
 
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         [5, 6, 7, 8],
         [9, 10, 11, 12]
     ]
-    rotated_array = obj.Rotating2DArray(rotate_input)
+    rotated_array = obj.rotating_2d_array(rotate_input)
     print("Rotated array : ")
     for i in range(4):
         print()  # Print a new line
@@ -126,14 +126,14 @@ if __name__ == "__main__":
 
     # Generate pascal triangle.
     n, row, column = 5, 7, 8
-    nth_row = obj.GeneratePascalTriangle(n, row, column)
+    nth_row = obj.generate_pascal_triangle(n, row, column)
     print("The " f"{n}th row of the pascal triangle: ", nth_row)
     print("----------------------------------------------")
 
     # Replace spaces.
     sentence = "Mr John Smith"
     true_length = 13
-    replaced = obj.ReplaceSpaces(sentence, true_length)
+    replaced = obj.replace_spaces(sentence, true_length)
     print("Replaced sentence: ")
     for i in replaced:
         print(i,end="")
@@ -141,14 +141,14 @@ if __name__ == "__main__":
 
     # String compression.
     compressed = "aabcccccaaa"
-    compressed_string = obj.StringCompression(compressed)
+    compressed_string = obj.string_compression(compressed)
     print("The compressed string: ", compressed_string)
     print("----------------------------------------------")
 
     # Substring check.
     s1 = "waterbottle"
     s2 = "erbottlewat"
-    is_substring = obj.isSubString(s1, s2)
+    is_substring = obj.is_sub_string(s1, s2)
     print("Is s2 a rotation of s1? ", is_substring)
     print("----------------------------------------------")
     

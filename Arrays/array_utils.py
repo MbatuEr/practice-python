@@ -3,7 +3,7 @@ import random
 
 class Array:
     # Sorts a vector around a pivot.
-    def DutchNationalFlag(self, pivot, nums):
+    def dutch_national_flag(self, pivot, nums):
         low, mid, high = 0, 0, len(nums) - 1
         while mid <= high:
             if nums[mid] < pivot:
@@ -18,7 +18,7 @@ class Array:
         return nums
     
     # Adds two binary numbers represented as strings
-    def AddBinary(self, s1, s2):
+    def add_binary(self, s1, s2):
         result = []
         carry = 0
         i, j = len(s1) - 1, len(s2) - 1
@@ -38,7 +38,7 @@ class Array:
         return ''.join(reversed(result))
 
     # Multiplies two large integers represented as vectors of their digits.
-    def Multiply(self, v1, v2):
+    def multiply(self, v1, v2):
         n = len(v1)
         m = len(v2)
         sign = -1 if (v1[0] < 0) ^ (v2[0] < 0) else 1
@@ -48,9 +48,9 @@ class Array:
         for i in range(n - 1, -1, -1):
             for j in range(m - 1, -1, -1):
                 product = v1[i] * v2[j]
-                sum_ = product + result[i + j + 1]  
-                result[i + j + 1] = sum_ % 10       
-                result[i + j] += sum_ // 10         
+                sum = product + result[i + j + 1]  
+                result[i + j + 1] = sum % 10       
+                result[i + j] += sum // 10         
 
         while len(result) > 1 and result[0] == 0:
             result.pop(0)
@@ -58,8 +58,8 @@ class Array:
         result[0] *= sign
         return result
 
-    # Check if it is possible to reach the last index of the array by jumping.
-    def CanReachEnd(self, vec):
+    # Checks if it is possible to reach the last index of the array by jumping.
+    def can_reach_end(self, vec):
         furthest_reach, counter, i = 0,0,0
         last_index = len(vec) - 1
         
@@ -76,7 +76,7 @@ class Array:
         return furthest_reach >= last_index
 
     # Removes duplicate elements from a vector.
-    def RemoveDuplicates(self, vec):
+    def remove_duplicates(self, vec):
         removed = []
         seen = set()
         for i in vec:
@@ -85,11 +85,11 @@ class Array:
                 removed.append(i)
 
         return removed
-        # unique_elements = list(dict.fromkeys(vec)) // that'll do the same
+        # unique_elements = list(dict.fromkeys(vec))  # that'll do the same
         # return unique_elements 
 
     # Calculates the maximum profit that can be obtained by buying and selling a stock once.
-    def ProfitFromStock(self, stocklist):
+    def profit_from_stock(self, stocklist):
         lowest_price = sys.maxsize
         max_profit = 0
         for price in stocklist:
@@ -101,11 +101,11 @@ class Array:
         return max_profit
     
     # Finds all prime numbers less than a given key value.
-    def FindPrimeValues(self, key_value):
+    def find_prime_values(self, key_value):
         primes = []
-        for i in range(key_value - 1, 1, -1):  
+        for i in range(key_value - 1, 2, -1):  
             is_prime = True
-            for j in range(2, int(i**0.5) + 1):
+            for j in range(2, int(i**0.5) + 1, 1):
                 if i % j == 0:
                     is_prime = False
                     break
@@ -115,7 +115,7 @@ class Array:
         return primes
     
     # Rearranges one vector based on the permutation order.
-    def PermutingElements(self, vec1, vec2):
+    def permuting_elements(self, vec1, vec2):
         i = 0
         while i < len(vec1):
             vec1[i], vec1[vec2[i]] = vec1[vec2[i]], vec1[i]
@@ -124,7 +124,7 @@ class Array:
             i += 1
 
     # Computes the next lexicographical permutation of the input vector.
-    def FindNextPermutation(self, vec):
+    def find_next_permutation(self, vec):
         s = len(vec) - 2
         while s >= 0 and vec[s] >= vec[s + 1]:
             s -= 1
@@ -141,12 +141,12 @@ class Array:
         vec[s + 1:] = reversed(vec[s + 1:])
 
     # Randomly selects a subset of a specified size from the input vector.
-    def OfflineRandomSampling(self, key, vec):
+    def offline_sandom_sampling(self, key, vec):
         random.shuffle(vec)
         vec[:] = vec[:key]
         
     # Updates an array's elements based on their associated probabilities.
-    def UpdateArrayWithProbabilities(self, size, input_array, probabilities):
+    def update_array_with_probabilities(self, size, input_array, probabilities):
         updated_array, counts = [], []
         counts = [round(prob * size) for prob in probabilities]
         i = 0
@@ -155,7 +155,8 @@ class Array:
         
         input_array[:] = updated_array  
     
-    def isValidSudoku(self,board):
+    # Checks if the sudoku board is valid.
+    def is_valid_sudoku(self,board):
         row = len(board)
         column = len(board[0])
         for i in range(row):
@@ -172,7 +173,7 @@ class Array:
         return True
 
     # Returns the elements of a 2D array in spiral order as a 1D vector.
-    def SpiralOrderOfArray(self, vec):
+    def spiral_order_of_array(self, vec):
         row = len(vec)
         if row == 0:
             return []
@@ -197,11 +198,10 @@ class Array:
         return arr
     
     # Rotates a 2D array 90 degrees clockwise.
-
-    def Rotating2DArray(self, vec):
+    def rotating_2d_array(self, vec):
         row = len(vec)
         column = len(vec[0])
-        rotated = [[0] * row for _ in range(column)]
+        rotated = [[0] * row for i in range(column)]
 
         for i in range(row):
             for j in range(column):
@@ -210,7 +210,7 @@ class Array:
         return rotated
     
     # Generates a specific row of Pascal's Triangle.
-    def GeneratePascalTriangle(self, n, row, column):
+    def generate_pascal_triangle(self, n, row, column):
         if column == 0 or row == 0:
             return 1
         pascal_triangle = [[0 for _ in range(column)] for _ in range(row)]
@@ -222,7 +222,7 @@ class Array:
                 pascal_triangle[i+1][j] = pascal_triangle[i][j] + pascal_triangle[i][j+1]
         
         for i in range(column):
-            result[i] = pascal_triangle[n][i]
+            result[i] = pascal_triangle[n+1][i]
         k = 0
         while k < len(result):
             if result[k] == 0:
@@ -232,7 +232,7 @@ class Array:
         return result
     
     # Replaces spaces in a string with '%20'.
-    def ReplaceSpaces(self, str, true_length):
+    def replace_spaces(self, str, true_length):
         space_count = 0
         for i in range(true_length):
             if str[i] == ' ':
@@ -253,7 +253,7 @@ class Array:
         return str
 
     # Compresses a string using the counts of repeated characters.
-    def StringCompression(self, str):
+    def string_compression(self, str):
         compressed = []
         count = 1
         for i in range(len(str)):
@@ -267,7 +267,7 @@ class Array:
         return compressed if len(compressed) < len(str) else str 
     
     # Checks if one string is a rotation of another string.
-    def isSubString(self, str1, str2):
+    def is_sub_string(self, str1, str2):
         if len(str1) != len(str2):
             return False
         return str2 in str1 + str1

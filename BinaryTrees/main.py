@@ -197,7 +197,7 @@ if __name__ == "__main__":
         print("The tree satisfies the BST property.")
     else:
         print("The tree does NOT satisfy the BST property.")
-
+    print("----------------------------------------------------------")
     # Find the first key greater than the input key
     input_key = 13
     first_key = bst.firstKeyGreater(input_key)

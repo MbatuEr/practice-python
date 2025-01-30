@@ -1,5 +1,6 @@
 import heapq
 from typing import List
+import math
 
 class Element:
     def __init__(self, value, array_index, element_index):
@@ -9,7 +10,19 @@ class Element:
 
     def __lt__(self, other):
         return self.value < other.value
+
+class Star:
+    def __init__(self, x: float, y: float, z: float):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def distance_to_earth(self) -> float:
+        return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
     
+    def __repr__(self):
+        return f"Star({self.x}, {self.y}, {self.z})"
+
 class Heapq:
     def __init__(self):
         self.min_heap = []
@@ -34,23 +47,42 @@ class Heapq:
         return result
      
     def sort_increasing_decreasing_array(self, arr: List[int]) -> List[int]:
-        sorted_arrays = self.split_into_sorted_subarrays(arr)
+        def split_into_sorted_subarrays(arr: List[int]) -> List[List[int]]:
+            sorted_arrays = []
+            increasing = True
+            start = 0
+
+            for i in range(1, len(arr) + 1):
+                if i == len(arr) or (arr[i] > arr[i - 1]) != increasing:
+                    segment = arr[start:i]
+                    if not increasing:
+                        segment.reverse()
+
+                    sorted_arrays.append(segment)
+                    start = i
+                    increasing = not increasing
+
+            return sorted_arrays
+        sorted_arrays = split_into_sorted_subarrays(arr)
         return self.merge_sorted_arrays(sorted_arrays)
     
-    def split_into_sorted_subarrays(self, arr: List[int]) -> List[List[int]]:
-        sorted_arrays = []
-        increasing = True
-        start = 0
+    def sort_k_sorted_array(self, arr, k):
+        result = []
 
-        for i in range(1, len(arr) + 1):
-            if i == len(arr) or (arr[i] > arr[i - 1]) != increasing:
-                segment = arr[start:i]
-                if not increasing:
-                    segment.reverse()
-                
-                sorted_arrays.append(segment)
-                start = i
-                increasing = not increasing
+        for num in arr[:k+1]:
+            heapq.heappush(self.min_heap, num)
         
-        return sorted_arrays
+        for num in arr[k+1:]:
+            result.append(heapq.heappop(self.min_heap))
+            heapq.heappush(self.min_heap, num)
+        
+        while self.min_heap:
+            result.append(heapq.heappop(self.min_heap))
+
+        return result
     
+    def find_k_closest_stars(self, stars: List[Star], k: int) -> List[Star]:
+        if k <= 0 : return []
+
+        return heapq.nsmallest(k, stars, key=lambda star: star.distance_to_earth())
+

@@ -1,5 +1,4 @@
 from Heaps import Heapq
-from Heaps import Element
 from Heaps import Star
 
 if __name__ == "__main__":
@@ -43,4 +42,20 @@ if __name__ == "__main__":
 
     closest_stars = pq.find_k_closest_stars(stars, 3)
     print(closest_stars)
+    print("-----------------------------------------------------------")
+
+    # Calculating median at each step.
+    sequence = [1, 0, 3, 5, 2, 0, 1]
+
+    for num in sequence:
+        pq.insert_for_median(num)
+        print(pq.get_median(), end=" ")
+    print("\n-----------------------------------------------------------")
+    
+    # Max elements
+    x = 3
+    max_values = [16, 60, 73, 45, 52, 30, 81]
+
+    values = pq.find_k_largest_elements(max_values, x)
+    print(f"Highest {x} values are:", *values)
     print("-----------------------------------------------------------")

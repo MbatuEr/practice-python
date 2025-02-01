@@ -19,7 +19,7 @@ if __name__ == "__main__":
     print("Sorted Array:", sorted_array)
     print("-----------------------------------------------------------")
 
-    # Sorting an increasing-decreasing array.
+    # Sorting an array which is k away at most.
     k_sorted_arr = [3, -1, 2, 6, 4, 5, 8]
     k = 2
     sorted_arr = pq.sort_k_sorted_array(k_sorted_arr, k)

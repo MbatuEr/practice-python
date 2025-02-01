@@ -12,8 +12,8 @@ class Heapq:
             if self.data[index] > self.data[parent]:
                 self.data[index], self.data[parent] = self.data[parent], self.data[index]
                 index = parent
-            else:
-                break
+            else: 
+                break  
     
     def get_max(self):
         if self.is_empty():
@@ -36,29 +36,30 @@ class Heapq:
         self.sift_down(0)
 
         return max_value
-    
+
     def sift_down(self, index):
-        size = self.get_size()\
-        
+        size = self.get_size()
+
         while index < size:
-            left_child = 2*index + 1
-            right_child = 2*index + 2
+            left_child = 2 * index + 1
+            right_child = 2 * index + 2
             largest = index
 
             if left_child < size and self.data[left_child] > self.data[largest]:
                 largest = left_child
             if right_child < size and self.data[right_child] > self.data[largest]:
                 largest = right_child
+            
             if largest != index:
                 self.data[index], self.data[largest] = self.data[largest], self.data[index]
                 index = largest
             else:
-                break
+                break 
     
     def remove(self, index):
         if index < 0 or index > self.get_size():
             raise IndexError("Index is out of range!")
-        
+
         self.data[index] = self.data[-1]
         self.data.pop()
 
@@ -77,7 +78,7 @@ class Heapq:
         for i in range(len(array) - 1, -1, -1):
             array[i] = self.extract_max()
         
-        return array   
+        return array 
     
 
 if __name__ == "__main__":

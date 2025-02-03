@@ -125,7 +125,7 @@ if __name__ == "__main__":
     print("\n----------------------------------------------")
 
     # Generate pascal triangle.
-    n, row, column = 5, 7, 8
+    n, row, column = 5, 8, 8
     nth_row = obj.generate_pascal_triangle(n, row, column)
     print("The " f"{n}th row of the pascal triangle: ", nth_row)
     print("----------------------------------------------")

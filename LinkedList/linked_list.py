@@ -4,15 +4,8 @@ class LinkedList:
     def __init__(self):
         self.head = None
     
-    def _del_(self):
-        current = self.head
-        while current:
-            next_node = current.next
-            del current
-            current = next_node
-    
-    # Append a new node to the end of the list.
-    def append(self,data):
+    def append(self, data):
+        """Appends a new node to the end of the list."""
         if not self.head:
             self.head = Node(data)
             return
@@ -20,82 +13,80 @@ class LinkedList:
         current = self.head
         while current.next:
             current = current.next
-
+        
         current.next = Node(data)
 
-    # Print the list.
     def print_list(self):
+        """Prints the nodes in the list."""
         current = self.head
         while current:
             print(f"{current.data} -> ", end="")
             current = current.next
         print("None")
 
-    # Find kth to last element.
-    def find_kth_to_last(self, k):
+    def find_kth_to_last(self, key):
+        """Finds the k-th to last element."""
         if not self.head:
-            raise ValueError("List is empty")
+            raise ValueError("List is empty!")
         
-        first = self.head
-        second = self.head
-
-        for i in range(k):
+        first = second = self.head
+        
+        for i in range(key - 1):
             if not first:
-                raise ValueError("k is larger than the list size")
+                raise ValueError("k is larger than the list size.")
             first = first.next
         
         while first:
-            first = first.next
-            second =second.next
+            first, second = first.next, second.next
         
-        return second.data
-
-    # Delete middle node.
+        return second.data if second else None
+        
     def delete_middle_node(self):
-        if not self.head or not self.head.next:
-            print("List is too short to have a middle node")
-            return
-        slow = self.head
-        fast = self.head
+        """Deletes the middle node of the list."""
+        if not self.head or not self.head.next: 
+            print("The list is too short to have a middle node.")
+
+        fast = slow = self.head
         prev = None
 
         while fast and fast.next:
-            prev = slow
+            prev= slow
             slow = slow.next
             fast = fast.next.next
-        
+            
         if prev:
             prev.next = slow.next
-            del slow
-
-    # Partition.
-    def partition(self,x):
-        if not self.head and not self.head.next:
-            return
         
-        less_head = Node(0)
-        greater_head = Node(0)
-        less = less_head
-        greater = greater_head
-        current = self.head
+    def partition(self, value):
+        """Reaaranges the list according to a pivot value."""
+        if not self.head or not self.head.next: return
 
+        less_head = less = Node(0)
+        equal_head = equal = Node(0)
+        greater_head = greater = Node(0)
+        
+        current = self.head
+        
         while current:
-            if current.data < x:
+            if current.data < value:
                 less.next = current
                 less = less.next
+            elif current.data == value:
+                equal.next = current
+                equal = equal.next
             else:
                 greater.next = current
                 greater = greater.next
+
             current = current.next
         
         greater.next = None
-        less.next = greater_head.next
+        equal.next = greater_head.next
+        less.next = equal_head.next or greater_head.next
         self.head = less_head.next
-        del less_head
-        del greater_head
 
-    # Reverse the list.
     def reverse(self, head):
+        """Rearranges the list by reversing it."""
         prev = None
         current = head
 
@@ -104,11 +95,11 @@ class LinkedList:
             current.next = prev
             prev = current
             current = next_node
-
+        
         return prev
 
-    # Add numbers in reverse order.
     def add_reverse_order(self, l1, l2):
+        """Adds numbers in the list in reverse order."""
         result = LinkedList()
         carry = 0
 
@@ -124,10 +115,10 @@ class LinkedList:
             carry = sum // 10
 
         result.head = self.reverse(result.head)
-        return result
-
-    # Add numbers in forward order.
-    def add_numbers_forward(self, l1, l2):
+        return result        
+    
+    def add_forward_order(self, l1, l2):
+        """Adds the numbers in the list in forward order."""
         l1 = self.reverse(l1)
         l2 = self.reverse(l2)
 
@@ -135,91 +126,84 @@ class LinkedList:
         reversed_result.head = self.reverse(reversed_result.head)
 
         return reversed_result
-        
-    # Remove duplicates.
+
     def remove_duplicates(self):
-        if not self.head:
-            return
-        
-        seen = set()
-        current = self.head
+        """Removes duplicates from the list."""
+        if not self.head: return
+
+        uniques = set()
         prev = None
+        current = self.head
 
         while current:
-            if current.data in seen:
+            if current.data in uniques:
                 prev.next = current.next
                 del current
             else:
-                seen.add(current.data)
+                uniques.add(current.data)
                 prev = current
-            current = prev.next 
-
-    # check if the list is a palindrome.
+            
+            current = prev.next
+        
     def is_palindrome(self):
-        if not self.head or not self.head.next:
-            return True # Empty or single element list is a palindrome
+        """Checks if the list is palindrome."""
+        if not self.head: return 
 
-        slow = self.head
-        fast = self.head
+        slow = fast = self.head
+        
+        is_palindrome = True
 
-        while fast and fast.next:
+        while fast.next and fast.next.next:
             slow = slow.next
             fast = fast.next.next
 
         second_half = self.reverse(slow)
         first_half = self.head
 
-        is_palindrome = True
-
         while second_half:
             if first_half.data != second_half.data:
                 is_palindrome = False
                 break
+
             first_half = first_half.next
             second_half = second_half.next
-
-        return is_palindrome    
-
-    # to get the length of the list.
+        
+        return is_palindrome
+    
     def get_length(self, head):
+        """Returns the length of a list."""
         length = 0
         current = head
         while current:
             length += 1
             current = current.next
+        
         return length
 
-    # Find the intersection of two lists.
-    def first_intersection(self, head1, head2):
-        if not head1 or not head2:
-            return None
+    def first_intersection(self, l1, l2):
+        """Finds a interaction between two list if it exists."""
+        len1 = self.get_length(l1)
+        len2 = self.get_length(l2)
 
-        len1 = self.get_length(head1)
-        len2 = self.get_length(head2)
-
-        longer = head1 if len1 > len2 else head2
-        shorter = head2 if len1 > len2 else head1
-
+        longer, shorter = (l1, l2) if len1 > len2 else (l2, l1)
+        
         length_diff = abs(len1 - len2)
 
-        for _ in range(length_diff):
+        for i in range(length_diff):
             longer = longer.next
 
-        while longer and shorter:
-            if longer == shorter:
+        while shorter and longer:
+            if longer.data == shorter.data:
                 return longer
-            longer = longer.next
+            
             shorter = shorter.next
+            longer = longer.next
 
-        return None
-    
-    # Detect loop in the list if any.
+        return None  
+
     def detect_loop(self, head):
-        if not head or not head.next:
-            return None
-        
-        slow = head
-        fast = head
+        """Detects loop in the list if any"""
+        slow = fast = head 
 
         while fast and fast.next:
             slow = slow.next
@@ -227,12 +211,12 @@ class LinkedList:
             if slow == fast:
                 break
             
-        if not fast or not fast.next:           # If no loop was found, return None
+        if not fast or not fast.next:
             return None
-
+        
         slow = head
         while slow != fast:
             slow = slow.next
-            fast = fast.next   
+            fast = fast.next
         
         return slow

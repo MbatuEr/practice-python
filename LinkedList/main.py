@@ -3,14 +3,9 @@ from node import Node
 
 if __name__ == "__main__":
     list = LinkedList()
-
-    list.append(3)
-    list.append(5)
-    list.append(8)
-    list.append(5)
-    list.append(8)
-    list.append(5)
-    list.append(3)
+    arr = (3, 5, 8, 5, 8, 5, 3)
+    for i in arr:
+        list.append(i)
 
     # Find kth to last.
     print("\nOriginal list:")
@@ -32,7 +27,7 @@ if __name__ == "__main__":
     print("-------------------------------------------------")    
 
     # Partition.
-    print("\nOriginal list:")
+    print("Original list:")
     list.print_list()
     partition = int(input("\nEnter partition value: "))
     list.partition(partition)
@@ -53,15 +48,15 @@ if __name__ == "__main__":
     
     print("First lists:")
     list1.print_list()
-    print("Second list:")
+    print("\nSecond list:")
     list2.print_list()
     result = list.add_reverse_order(list1.head, list2.head)
-    print("The sum of the two lists in reverse order is:")
+    print("\nThe sum of the two lists in reverse order is:")
     result.print_list()
     print("-------------------------------------------------")
 
     # Add numbers in forward order.
-    result_forward = list.add_numbers_forward(list1.head, list2.head)
+    result_forward = list.add_forward_order(list1.head, list2.head)
     print("The sum of the two lists in forward order is:")
     result_forward.print_list()
     print("-------------------------------------------------")
@@ -83,7 +78,7 @@ if __name__ == "__main__":
     list_palindrome.append(5)
     list_palindrome.append(3)
 
-    print("\nIs the list a Palindrome? " + ("Yes" if list_palindrome.is_palindrome() else "No"))
+    print("Is the list a Palindrome? " + ("Yes" if list_palindrome.is_palindrome() else "No"))
     print("-------------------------------------------------")
 
     # find the first intersection node.
@@ -119,9 +114,4 @@ if __name__ == "__main__":
         print(f"The loop starts at node with data: {loop_start.data}")
     else:
         print("No loop detected") 
-
-
-
-    
-    
-
+    print("-------------------------------------------------")

@@ -50,7 +50,7 @@ class LinkedList:
         prev = None
 
         while fast and fast.next:
-            prev= slow
+            prev = slow
             slow = slow.next
             fast = fast.next.next
             
@@ -138,7 +138,6 @@ class LinkedList:
         while current:
             if current.data in uniques:
                 prev.next = current.next
-                del current
             else:
                 uniques.add(current.data)
                 prev = current
@@ -150,9 +149,6 @@ class LinkedList:
         if not self.head: return 
 
         slow = fast = self.head
-        
-        is_palindrome = True
-
         while fast.next and fast.next.next:
             slow = slow.next
             fast = fast.next.next
@@ -162,13 +158,12 @@ class LinkedList:
 
         while second_half:
             if first_half.data != second_half.data:
-                is_palindrome = False
-                break
+                return False
 
             first_half = first_half.next
             second_half = second_half.next
         
-        return is_palindrome
+        return True
     
     def get_length(self, head):
         """Returns the length of a list."""

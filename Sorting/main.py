@@ -1,6 +1,7 @@
 from sorting import Sorting
 from sorting import Event
-
+from sorting import Student
+from sorting import Team
 
 if __name__ == "__main__":
     # Merge arrays.
@@ -79,3 +80,59 @@ if __name__ == "__main__":
     for interval in unions:
         print(f"({interval.start}, {interval.end})", end=" ")
     print("\n--------------------------------------------------------------")
+
+    # Sorting string & int pairs by integers.
+    students = [
+        Student("Alice", 20), Student("Bob", 22), Student("Charlie", 20),
+        Student("David", 21), Student("Eve", 22), Student("Frank", 21)
+    ]
+
+    print("Input vector:")
+    print(students)
+
+    sort.sorting_students_by_age(students)
+
+    print("After sorting by age:")
+    print(students)
+    print("--------------------------------------------------------------")
+
+    # Sorting into two different arrays.
+    fenerbahce = [
+        Team("Livakovic", 190), Team("Kadioglu", 180), Team("Djiku", 188),
+        Team("Becao", 194), Team("Osayi", 184), Team("Ismail", 183), Team("Fred", 173),
+        Team("Kahveci", 180), Team("Szymanski", 174), Team("Tadic", 181), Team("Dzeko", 193)
+    ]
+
+    galatasaray = [
+        Team("Muslera", 188), Team("Baris", 183), Team("Davinson", 192),
+        Team("Nelsson", 187), Team("Boey", 181), Team("Torreira", 169), Team("Demirbay", 182),
+        Team("Ziyech", 182), Team("Mertens", 170), Team("Akturkoglu", 179), Team("Icardi", 185)
+    ]
+
+    sort.team_photo(fenerbahce, galatasaray)
+    print("--------------------------------------------------------------")
+
+    # Perform quick sort.
+    qvec = [10, 80, 30, 90, 40, 50, 70]
+    sorting = Sorting(qvec)
+    sorting.quick_sort()
+
+    print("Sorted Array:", end=" ")
+    sorting.print_values()
+    print("--------------------------------------------------------------")
+
+    # Perform bucket sort.
+    bucket_arr = [0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68]
+
+    print("Original array:", bucket_arr)
+    sort.bucket_sort(bucket_arr)
+    print("Sorted array:", bucket_arr)
+    print("--------------------------------------------------------------")
+
+    # Perform radix sort.
+    radix_arr = [17012, 45345, 75234, 90714, 12802, 234, 23, 4466]
+
+    print("Original array:", radix_arr)
+    sort.radix_sort(radix_arr)
+    print("Sorted array:", radix_arr)
+    print("--------------------------------------------------------------")

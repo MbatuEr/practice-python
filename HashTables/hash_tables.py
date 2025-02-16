@@ -1,254 +1,144 @@
-from collections import defaultdict
-from collections import Counter
+from collections import defaultdict, Counter
+from itertools import zip_longest
 
 class HashTables:
-    def __init__(self):
-        self.map = {}
-        self.notes = {}
-        self.wordIndex = Counter()
+    def has_all_unique_characters(self, s: str) -> bool:
+        return len(set(s)) == len(s)
 
-    # Checks if a string has all unique characters.
-    def hasAllUniqueCharacters(self, str):
-        self.map.clear()
-        for char in str:
-            if char in self.map:
-                return False
-            self.map[char] = True
+    def are_permutations(self, s1: str, s2: str) -> bool:
+        return Counter(s1) == Counter(s2)
 
-        return True
-    
-    # Checks if two strings are permutations of each other.
-    def arePermutation(self, str1, str2):
-        self.map.clear()
-        for char in str1:
-            self.map[char] = self.map.get(char, 0) + 1
-        
-        for char in str2:
-            if char not in self.map or self.map[char] == 0:
-                return False
-            self.map[char] -= 1
+    def is_palindrome_permutation(self, s: str) -> bool:
+        s = s.replace(" ", "")
+        char_counts = Counter(s)
+        return sum(count % 2 for count in char_counts.values()) <= 1
 
-        return True
-    
-    # Checks if a string is a permutation of a palindrome.
-    def isPalindromePermutation(self, str):
-        self.map.clear()
-        odd_count = 0
-
-        for char in str:
-            if char == ' ':
-                continue
-
-            self.map[char] = self.map.get(char, 0) + 1
-
-            if self.map[char] % 2 == 0:
-                odd_count -= 1
-            else:
-                odd_count += 1
-
-        return odd_count <= 1
-        
-    # Checks if two strings size differ by one.
-    def isOneAwayChecker(self, str1, str2):
-        if abs(len(str1) - len(str2)) >= 2:
+    def is_one_away(self, s1: str, s2: str) -> bool:
+        if abs(len(s1) - len(s2)) > 1:
             return False
-        else:
-            return self.isOneAway(str1, str2)
-    
-    # Checks if two strings are one edit away from each other.
-    def isOneAway(self, str1, str2):
-        diff_count = 0
-        self.map.clear()
-
-        shorter = str1 if len(str1) <= len(str2) else str2
-        longer =  str2 if len(str1) <= len(str2) else str1
-
-        for char in shorter:
-            self.map[char] = self.map.get(char, 0) + 1
         
-        for char in longer:
-            if char not in self.map or self.map[char] == 0:
-                diff_count += 1
-            else:
-                self.map[char] -= 1
-
-        return diff_count <= 1
+        diffs = sum(c1 != c2 for c1, c2 in zip_longest(s1, s2, fillvalue=""))
+        return diffs <= 1
     
-    # Finds the most frequent word in a string.
-    def mostFrequentWord(self, str):
-        self.map.clear()
-        max_count = 0
-        most_freq_char = ''
-        for char in str:
-            self.map[char] = self.map.get(char, 0) + 1
-        
-        for char, count in self.map.items():
-            if count > max_count:
-                max_count = count
-                most_freq_char = char
-        
-        return {most_freq_char : max_count}
+    def most_frequent_word(self, s: str) -> dict:
+        char_counts = Counter(s)
+        return max(char_counts.items(), key=lambda x: x[1])
     
-    # Finds the nearest repetition of a word in a string.
-    def nearestRepetition(self, str):
-        min_dist = float('inf')
+    def nearest_repetition(self, words: list) -> dict:
+        word_positions = {}
+        min_distance = float('inf')
         nearest_word = ""
-        self.map.clear()
-    
-        for i, word in enumerate(str):
-            if word in self.map:
-                distance = i - self.map[word]
 
-                if distance < min_dist:
-                    min_dist = distance
-                    nearest_word = word
-    
-            self.map[word] = i
-            
+        for i, word in enumerate(words):
+            if word in word_positions:
+                distance = i - word_positions[word]
+                if distance < min_distance:
+                    min_distance, nearest_word = distance, word
+            word_positions[word] = i
         
-        return {nearest_word: min_dist if min_dist != float('inf') else -1}
+        return {nearest_word: min_distance if min_distance != float('inf') else -1}
     
-    # Finds the shortest subarray that contains all the keywords in a paragraph.
-    def findShortestSequentialSubarray(self, paragraph, keywords):
+    def find_shortest_sequential_subarray(self, paragraph: list, keywords: set) -> tuple:
+        keyword_count = defaultdict(int)
         matched_keywords = 0
-        self.map.clear()
-        result = (-1,-1)
-        min_length = float('inf')
         start = 0
+        min_length = float('inf')
+        result = (-1, -1)
 
         for end, word in enumerate(paragraph):
             if word in keywords:
-                self.map[word] = self.map.get(word, 0) + 1
-                if self.map[word] == 1:
-                    matched_keywords +=  1
+                keyword_count[word] += 1
+                if keyword_count[word] == 1:
+                    matched_keywords += 1
             
             while matched_keywords == len(keywords):
-                window_length = end - start + 1
-                if window_length < min_length:
-                    min_length = window_length
+                if end - start + 1 < min_length:
+                    min_length = end - start + 1
                     result = (start, end)
-
-                start_word = paragraph[start]
-                if start_word in keywords:
-                    self.map[start_word] -= 1
-                    if self.map[start_word] == 0:
+                
+                if paragraph[start] in keywords:
+                    keyword_count[paragraph[start]] -= 1
+                    if keyword_count[paragraph[start]] == 0:
                         matched_keywords -= 1
-                    
                 start += 1
-
+        
         return result
     
-    # Finds the longest subarray with distinct entries.
-    def longestSubarrayWithDistinctEntries(self, arr):
+    def longest_subarray_with_distinct_entries(self, arr: list) -> tuple:
+        seen = {}
         start = 0
-        self.map.clear()
-        result = (-1, -1)
-        for end in range(len(arr)):
-            if arr[end] not in self.map:
-                self.map[arr[end]] = 1
-            else:
-                while arr[end] in self.map:
-                    del self.map[arr[start]]
-                    start += 1
-                self.map[arr[end]] = 1
+        best_range = (0, 0)
 
-            if(end -start > result[1]- result[0]):
-                result = (start, end)
+        for end, num in enumerate(arr):
+            if num in seen and seen[num] >= start:
+                start = seen[num] + 1
+            seen[num] = end
+            if end - start > best_range[1] - best_range[0]:
+                best_range = (start, end)
         
-        return result
+        return best_range
     
-    # Finds the length of the longest contained interval.
-    def longestContainedInterval(self, arr):
-        self.map.clear()
+    def longest_contained_interval(self, arr: list) -> int:
+        elements = set(arr)
         max_length = 0
+
         for num in arr:
-            if num not in self.map:
-                left = self.map.get(num - 1, 0)
-                right = self.map.get(num + 1, 0)
-                length = left + right + 1
-
-                self.map[num] = length
-                self.map[num - left] = length
-                self.map[num + right] = length
-
-                max_length = max(max_length, length)
+            if num - 1 not in elements:
+                current_length = 1
+                while num + 1 in elements:
+                    num += 1
+                    current_length += 1
+                max_length = max(max_length, current_length)
         
-        return length
+        return max_length
     
-    # Finds the average of top three scores.
-    def averageOfTopThreeScores(self, scores):
+    def average_of_top_three_scores(self, scores: list) -> tuple:
         top_scores = defaultdict(list)
+        max_avg = 0
         max_name = None
-        max_average = 0
 
         for name, score in scores:
             top_scores[name].append(score)
 
         for name, score_list in top_scores.items():
             if len(score_list) >= 3:
-                top_three = sorted(score_list, reverse=True)[:3]
-                average = sum(top_three) / 3.0
-
-                if average > max_average:
-                    max_average = average
-                    max_name = name
-
-        return max_name, max_average
+                avg = sum(sorted(score_list, reverse=True)[:3]) / 3.0
+                if avg > max_avg:
+                    max_avg, max_name = avg, name
+        
+        return max_name, max_avg
     
-    # Finds all string decompositions.
-    def allStringDecompositions(self, sentence, words):
+    def all_string_decompositions(self, sentence: str, words: list) -> list:
         if not words or not sentence:
-            return None  
-
-        word_length = len(words[0])  
-        word_count = len(words)
-        total_length = word_length * word_count  
-
-
-        self.wordIndex = Counter(words)
-
-        for i in range(len(sentence) - total_length + 1):
-            seen_words = Counter()
+            return []
+        
+        word_len = len(words[0])
+        total_len = word_len * len(words)
+        word_count = Counter(words)
+        result = []
+        
+        for i in range(len(sentence) - total_len + 1):
+            seen = Counter()
             j = 0
-
-            while j < word_count:
-                current_word = sentence[i + j * word_length : i + (j + 1) * word_length]
-
-                if current_word not in self.wordIndex:
+            while j < len(words):
+                word = sentence[i + j * word_len: i + (j + 1) * word_len]
+                if word not in word_count or seen[word] >= word_count[word]:
                     break
-
-                seen_words[current_word] += 1
-                if seen_words[current_word] > self.wordIndex[current_word]:
-                    break
-
+                seen[word] += 1
                 j += 1
-
-            if j == word_count:
-                return i
-
-        return None
+            if j == len(words):
+                result.append(i)
+        
+        return result
     
-    # Tests the conjecture for the first billion integers
-    def testCollatz(self, n):
-        for i in range(1, n+1):
-            if not self.collatzSequence(i):
+    def test_collatz(self, n: int) -> bool:
+        return all(self.collatz_sequence(i) for i in range(1, n + 1))
+
+    def collatz_sequence(self, n: int) -> bool:
+        seen = set()
+        while n != 1:
+            if n in seen:
                 return False
-        
+            seen.add(n)
+            n = n // 2 if n % 2 == 0 else 3 * n + 1
         return True
-    
-    # Recursive function to compute Collatz sequence.
-    def collatzSequence(self, n):
-        self.map.clear()
-        
-        if n == 1:
-            return True
-        
-        if n in self.map:
-            return self.map[n] 
-
-        if n % 2 == 0:
-            self.map[n] = self.collatzSequence(n // 2)
-        else:
-            self.map[n] = self.collatzSequence(3 * n + 1)
-        
-        return self.map[n]

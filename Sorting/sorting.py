@@ -231,7 +231,7 @@ class Sorting:
 
         sorted_arr = []
         for key in sorted(buckets):
-            sorted_arr.extend(buckets[key])
+            sorted_arr.extend(sorted(buckets[key]))
         
         arr[:] = sorted_arr
     

@@ -77,6 +77,6 @@ if __name__ == "__main__":
     print("-" * 60)
 
     # Collatz conjecture
-    n = 1000
+    n = 1000000
     print(f"Collatz conjecture holds for all numbers up to {n}: {obj.test_collatz(n)}")
     print("-" * 60)

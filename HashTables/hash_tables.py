@@ -2,29 +2,35 @@ from collections import defaultdict, Counter
 from itertools import zip_longest
 
 class HashTables:
-    def has_all_unique_characters(self, s: str) -> bool:
+    @staticmethod
+    def has_all_unique_characters(s: str) -> bool:
         return len(set(s)) == len(s)
 
-    def are_permutations(self, s1: str, s2: str) -> bool:
+    @staticmethod
+    def are_permutations(s1: str, s2: str) -> bool:
         return Counter(s1) == Counter(s2)
 
-    def is_palindrome_permutation(self, s: str) -> bool:
+    @staticmethod
+    def is_palindrome_permutation(s: str) -> bool:
         s = s.replace(" ", "")
         char_counts = Counter(s)
         return sum(count % 2 for count in char_counts.values()) <= 1
 
-    def is_one_away(self, s1: str, s2: str) -> bool:
+    @staticmethod
+    def is_one_away(s1: str, s2: str) -> bool:
         if abs(len(s1) - len(s2)) > 1:
             return False
         
         diffs = sum(c1 != c2 for c1, c2 in zip_longest(s1, s2, fillvalue=""))
         return diffs <= 1
     
-    def most_frequent_word(self, s: str) -> dict:
+    @staticmethod
+    def most_frequent_word(s: str) -> dict:
         char_counts = Counter(s)
         return max(char_counts.items(), key=lambda x: x[1])
     
-    def nearest_repetition(self, words: list) -> dict:
+    @staticmethod
+    def nearest_repetition(words: list) -> dict:
         word_positions = {}
         min_distance = float('inf')
         nearest_word = ""
@@ -38,7 +44,8 @@ class HashTables:
         
         return {nearest_word: min_distance if min_distance != float('inf') else -1}
     
-    def find_shortest_sequential_subarray(self, paragraph: list, keywords: set) -> tuple:
+    @staticmethod
+    def find_shortest_sequential_subarray(paragraph: list, keywords: set) -> tuple:
         keyword_count = defaultdict(int)
         matched_keywords = 0
         start = 0
@@ -64,7 +71,8 @@ class HashTables:
         
         return result
     
-    def longest_subarray_with_distinct_entries(self, arr: list) -> tuple:
+    @staticmethod
+    def longest_subarray_with_distinct_entries(arr: list) -> tuple:
         seen = {}
         start = 0
         best_range = (0, 0)
@@ -78,7 +86,8 @@ class HashTables:
         
         return best_range
     
-    def longest_contained_interval(self, arr: list) -> int:
+    @staticmethod
+    def longest_contained_interval(arr: list) -> int:
         elements = set(arr)
         max_length = 0
 
@@ -92,7 +101,8 @@ class HashTables:
         
         return max_length
     
-    def average_of_top_three_scores(self, scores: list) -> tuple:
+    @staticmethod
+    def average_of_top_three_scores(scores: list) -> tuple:
         top_scores = defaultdict(list)
         max_avg = 0
         max_name = None
@@ -108,7 +118,8 @@ class HashTables:
         
         return max_name, max_avg
     
-    def all_string_decompositions(self, sentence: str, words: list) -> list:
+    @staticmethod
+    def all_string_decompositions(sentence: str, words: list) -> list:
         if not words or not sentence:
             return []
         
@@ -134,7 +145,8 @@ class HashTables:
     def test_collatz(self, n: int) -> bool:
         return all(self.collatz_sequence(i) for i in range(1, n + 1))
 
-    def collatz_sequence(self, n: int) -> bool:
+    @staticmethod
+    def collatz_sequence(n: int) -> bool:
         seen = set()
         while n != 1:
             if n in seen:

@@ -1,46 +1,55 @@
 from collections import deque
+from enum import Enum
+from dataclasses import dataclass
 
+class AnimalType(Enum):
+    DOG = "dog"
+    CAT = "cat"
+
+@dataclass
 class Animal:
-    def __init__(self,animal_type, order):
-        self.type = animal_type
-        self.order = order
+    animal_type: AnimalType
+    order: int
 
 class AnimalShelter:
     def __init__(self):
-        self.dogs = deque()
-        self.cats = deque()
-        self.order = 1
+        self.dogs: deque[Animal] = deque()
+        self.cats: deque[Animal] = deque()
+        self.order: int = 1
 
-    def enqueue(self, animal_type):
-        if animal_type == "dog":
-            self.dogs.append(Animal("dog", self.order))
-            self.order += 1
-        elif animal_type == "cat":
-            self.cats.append(Animal("cat", self.order))
-            self.order += 1
+    def enqueue(self, animal_type: str) -> None:
+        try:
+            animal_enum = AnimalType(animal_type.lower())
+        except ValueError:
+            raise ValueError(f"Invalid animal type: {animal_type}. Allowed types: {', '.join(t.value for t in AnimalType)}")
+
+        animal = Animal(animal_enum, self.order)
+        self.order += 1
+
+        if animal_enum == AnimalType.DOG:
+            self.dogs.append(animal)
         else:
-            print("Invalid animal type!")
-        
-    def dequeue_any(self):
+            self.cats.append(animal)
+
+    def dequeue_any(self) -> Animal:
         if not self.dogs and not self.cats:
-            raise RuntimeError("No available for adoption.")
+            raise RuntimeError("No animals available for adoption.")
+
         if not self.dogs:
-            return self.dequeue_cat()
-        elif not self.cats:
-            return self.dequeue_dog()
-        
-        if self.dogs[0].order < self.cats[0].order:
-            return self.dequeue_dog()
-        else:
-            return self.dequeue_cat()
-        
-    def dequeue_dog(self):
-        if not self.dogs:
-            raise RuntimeError("No dogs available for adoption.")
-        return self.dogs.popleft()
-    
-    def dequeue_cat(self):
+            return self._dequeue(self.cats, "No cats available for adoption.")
         if not self.cats:
-            raise RuntimeError("No cats available for adoption.")
-        return self.cats.popleft()
-    
+            return self._dequeue(self.dogs, "No dogs available for adoption.")
+
+        return self.dequeue_dog() if self.dogs[0].order < self.cats[0].order else self.dequeue_cat()
+
+    def dequeue_dog(self) -> Animal:
+        return self._dequeue(self.dogs, "No dogs available for adoption.")
+
+    def dequeue_cat(self) -> Animal:
+        return self._dequeue(self.cats, "No cats available for adoption.")
+
+    def _dequeue(self, queue: deque[Animal], error_message: str) -> Animal:
+        if not queue:
+            raise RuntimeError(error_message)
+        return queue.popleft()
+

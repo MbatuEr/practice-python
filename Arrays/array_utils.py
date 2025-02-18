@@ -1,9 +1,11 @@
-import sys
-import random
+import sys, random
+from typing import List
+
 
 class Array:
-    def dutch_national_flag(self, pivot, nums):
-        """Sorts a vector around a pivot."""
+    @staticmethod
+    def dutch_national_flag(pivot: int, nums: List[int]) -> List[int]:
+        """Sorts a list around a pivot."""
         low, mid, high = 0,0, len(nums) - 1
 
         while mid <= high:
@@ -20,7 +22,8 @@ class Array:
         
         return nums
     
-    def add_binary(self, s1, s2):
+    @staticmethod
+    def add_binary(s1: str, s2: str) -> str:
         """Adds two binary numbers represented as strings"""
         i, j, carry = len(s1) - 1,len(s2) - 1, 0
         result = []
@@ -40,8 +43,9 @@ class Array:
         
         return ''.join(reversed(result))
 
-    def multiply(self, v1, v2):
-        """Multiplies two large integers represented as vectors of their digits."""
+    @staticmethod
+    def multiply(v1: List[int], v2: List[int]) -> List[int]:
+        """Multiplies two large integers represented as lists of their digits."""
         n, m = len(v1), len(v2)
         sign = -1 if v1[0] < 0 ^ v2[0] < 0 else 1
         multiplied = [0] * (n + m)
@@ -49,8 +53,7 @@ class Array:
 
         for i in range(n - 1, -1, -1):
             for j in range(m - 1, -1, -1):
-                product = v1[i] * v2[j]
-                sum = product + multiplied[i + j + 1]
+                sum = v1[i] * v2[j] + multiplied[i + j + 1]
                 multiplied[i + j + 1] = sum % 10
                 multiplied[i + j] += sum // 10
         
@@ -60,14 +63,15 @@ class Array:
         multiplied[0] *= sign
         return multiplied
 
-    def can_reach_end(self, vec):
+    @staticmethod
+    def can_reach_end(nums: List[int]) -> bool:
         """Checks if it is possible to reach the last index of the array by jumping."""
         i, counter, furthest_reach = 0, 0, 0
-        last_index = len(vec) - 1
+        last_index = len(nums) - 1
     
-        while i <= furthest_reach and furthest_reach < last_index:
+        while i <= furthest_reach < last_index:
             temp = furthest_reach
-            furthest_reach = max(furthest_reach, vec[i] + i)
+            furthest_reach = max(furthest_reach, nums[i] + i)
             if temp != furthest_reach:
                 counter += 1
             i += 1
@@ -77,24 +81,15 @@ class Array:
         
         return furthest_reach >= last_index
 
-    def remove_duplicates(self, vec):
-        """Removes duplicate elements from a vector."""
-        seen = set()
-        removed = []
-        for num in vec:
-            if num not in seen:
-                seen.add(num)
-                removed.append(num)
-        
-        return removed
-        # that'll do the same.
-        # unique_elements = list(dict.fromkeys(vec))
-        # return unique_elements
+    @staticmethod
+    def remove_duplicates(nums: List[int]) -> List[int]:
+        """Removes duplicate elements from a list while maintaining order."""
+        return list(dict.fromkeys(nums))
 
-    def profit_from_stock(self, stocklist):
-        """Calculates the maximum profit that can be obtained by buying and selling a stock once."""
-        lowest_price = sys.maxsize
-        highest_profit = 0
+    @staticmethod
+    def profit_from_stock(stocklist):
+        """Calculates the maximum profit from a single buy-sell operation."""
+        lowest_price, highest_profit = sys.maxsize, 0
 
         for price in stocklist:
             lowest_price = min(lowest_price,price)
@@ -102,8 +97,8 @@ class Array:
 
         return highest_profit
     
-    def find_prime_values(self, key_value):
-        """Finds all prime numbers less than a given key value."""
+    @staticmethod
+    def find_prime_values(key_value: int) -> List[int]:
         result = []
 
         for i in range(key_value - 1, 2, -1):
@@ -117,38 +112,39 @@ class Array:
         
         result.append(2)
         return result
-        
-    def permuting_elements(self, vec1, vec2):
-        """Rearranges one vector based on the permutation order."""
-        for i in range(0, len(vec1)):
-            vec1[i], vec1[vec2[i]] = vec1[vec2[i]], vec1[i]
-            temp = vec2[i] 
-            vec2[temp], vec2[i] = vec2[i], vec2[temp]
+    
+    @staticmethod
+    def permuting_elements(nums1: List[int], nums2: List[int]) -> List[int]:
+        """Rearranges one array based on the permutation order."""
+        for i in range(0, len(nums1)):
+            nums1[i], nums1[nums2[i]] = nums1[nums2[i]], nums1[i]
+            temp = nums2[i] 
+            nums2[temp], nums2[i] = nums2[i], nums2[temp]
 
-    def find_next_permutation(self, vec):
-        """Computes the next lexicographical permutation of the input vector."""
-        s = len(vec) - 2
+    @staticmethod
+    def find_next_permutation(nums: List[int]) -> List[int]:
+        s = len(nums) - 2
 
-        while s >= 0 and vec[s] > vec[s + 1]:
+        while s >= 0 and nums[s] > nums[s + 1]:
             s -= 1 
         
         if s == -1:
             print("The original is the last permutation.")
         
-        for i in range(len(vec) - 1, s, -1):
-            if vec[s] > vec[i]:
-                vec[s], vec[i] = vec[i], vec[s]
+        for i in range(len(nums) - 1, s, -1):
+            if nums[s] > nums[i]:
+                nums[s], nums[i] = nums[i], nums[s]
                 break
 
-        vec[s+1:] = reversed(vec[s + 1:]) 
+        nums[s+1:] = reversed(nums[s + 1:]) 
 
-    def offline_sandom_sampling(self, key, vec):
-        """Randomly selects a subset of a specified size from the input vector."""
-        random.shuffle(vec)
-        vec[:] = vec[:key]
+    @staticmethod
+    def offline_sandom_sampling(key: int, nums: List[int]) -> List[int]:
+        """Randomly selects a subset of a specified size from the input array."""
+        random.shuffle(nums)
+        nums[:] = nums[:key]
         
-    def update_array_with_probabilities(self, size, input_array, probabilities):
-        """Updates an array's elements based on their associated probabilities."""
+    def update_array_with_probabilities(self, size: int, input_array: List[int], probabilities: List[float]) ->List[int]:
         updated_array, counts = [], []
         counts = [round(prob*size) for prob in probabilities]
     
@@ -157,8 +153,8 @@ class Array:
 
         input_array[:] = updated_array 
 
-    def is_valid_sudoku(self,board):
-        """Checks if the sudoku board is valid."""
+    @staticmethod
+    def is_valid_sudoku(board: List[List[int]]) -> bool:
         row = len(board)
         column = len(board[0])
 
@@ -175,48 +171,39 @@ class Array:
     
         return True
     
-    def spiral_order_of_array(self, vec):
-        """Returns the elements of a 2D array in spiral order as a 1D vector."""
-        row = len(vec)
-        column = len(vec[0])
+    @staticmethod
+    def spiral_order_of_array(matrix: List[List[int]]) -> List[int]:
+        row = len(matrix)
+        column = len(matrix[0])
         spiral_array = []
 
         left, right, top, bottom = 0, column - 1, 0, row - 1
 
         while left <= right and top <= bottom:
             for i in range(left, right + 1):
-                spiral_array.append(vec[top][i])
+                spiral_array.append(matrix[top][i])
             top += 1
 
             for i in range(top, bottom + 1):
-                spiral_array.append(vec[i][right])
+                spiral_array.append(matrix[i][right])
             right -= 1
 
             for i in range(right, left - 1, -1):
-                spiral_array.append(vec[bottom][i])
+                spiral_array.append(matrix[bottom][i])
             bottom -= 1
 
             for i in range(bottom, top - 1, -1):
-                spiral_array.append(vec[i][left])
+                spiral_array.append(matrix[i][left])
             left += 1
         
         return spiral_array
 
-    def rotating_2d_array(self, vec):
-        """Rotates a 2D array 90 degrees clockwise."""
-        row = len(vec)
-        column = len(vec[0])
-
-        rotated_array = [[0] * row for i in range(column)]
-
-        for i in range(row):
-            for j in range(column):
-                rotated_array[j][row - i - 1] = vec[i][j]
-        
-        return rotated_array
-
-    def generate_pascal_triangle(self, n, row, column):
-        """Generates a specific row of Pascal's Triangle."""
+    @staticmethod
+    def rotate_matrix(matrix: List[List[int]]) -> List[List[int]]:
+        return [list(row) for row in zip(*matrix[::-1])]
+    
+    @staticmethod
+    def generate_pascal_triangle(n: int, row: int, column: int) -> List[int]:
         if row == 0 or column == 0:
             return 1
         
@@ -234,47 +221,25 @@ class Array:
         
         return result
     
-    def replace_spaces(self, str, true_length):
-        """Replaces spaces in a string with '%20'."""
-        space_count = 0 
-        for i in range(true_length):
-            if str[i] == ' ':
-                space_count += 1
-        
-        index = true_length + space_count * 2
-        str = list(str)
-
-        str += [' '] * space_count * 2
-
-        for i in range(true_length - 1, -1, -1):
-            if str[i] == ' ':
-                str[index - 1] = '0'
-                str[index - 2] = '2'
-                str[index - 3] = '%'
-                index -= 3
-            else:
-                str[index - 1] = str[i]
-                index -= 1
-
-        return str
+    @staticmethod
+    def replace_spaces(s: str) -> str:
+        return s.replace(' ', '%20')
     
-    def string_compression(self, str):
+    @staticmethod
+    def string_compression(s: str) ->str:
         """Compresses a string using the counts of repeated characters."""
         count = 1
         compressed = []
-        for i in range(len(str)):
-            if i + 1 < len(str) and str[i] == str[i + 1]:
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
                 count += 1
             else:
-                compressed.append(str[i])
-                compressed.append(count)
+                compressed.append(f"{s[i - 1]}{count}")
                 count = 1
         
-        return compressed
- 
-    def is_sub_string(self, str1, str2):
-        """Checks if one string is a rotation of another string."""
-        if len(str1) != len(str2):
-            return False
-
-        return str2 in str1 + str1
+        compressed.append(f"{s[-1]}{count}")
+        return ''.join(compressed)
+    
+    @staticmethod
+    def is_rotation(s1: str, s2: str) -> bool:
+        return len(s1) == len(s2) and s2 in (s1 + s1)

@@ -50,13 +50,13 @@ if __name__ == "__main__":
     list1.print_list()
     print("\nSecond list:")
     list2.print_list()
-    result = list.add_reverse_order(list1.head, list2.head)
+    result = list.add_in_reverse_order(list1.head, list2.head)
     print("\nThe sum of the two lists in reverse order is:")
     result.print_list()
     print("-------------------------------------------------")
 
     # Add numbers in forward order.
-    result_forward = list.add_forward_order(list1.head, list2.head)
+    result_forward = list.add_in_forward_order(list1.head, list2.head)
     print("The sum of the two lists in forward order is:")
     result_forward.print_list()
     print("-------------------------------------------------")
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     print("Is the list a Palindrome? " + ("Yes" if list_palindrome.is_palindrome() else "No"))
     print("-------------------------------------------------")
 
-    # find the first intersection node.
+    # Find the first intersection node.
     firstlist = Node(1)
     firstlist.next = Node(2)
     firstlist.next.next = Node(3)
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     secondlist.next = firstlist.next.next
 
     interaction_node = LinkedList()
-    intersection = interaction_node.first_intersection(firstlist, secondlist)
+    intersection = interaction_node.find_intersection(firstlist, secondlist)
     
     
     if intersection:
@@ -99,7 +99,7 @@ if __name__ == "__main__":
         print("No intersection found")
     print("-------------------------------------------------")
 
-    # find the loop node.
+    # Find the loop node.
     loop_node = Node(1)
     loop_node.next = Node(2)
     loop_node.next.next = Node(3)

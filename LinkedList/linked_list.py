@@ -1,11 +1,11 @@
+from __future__ import annotations
 from node import Node
 
 class LinkedList:
     def __init__(self):
         self.head = None
     
-    def append(self, data):
-        """Appends a new node to the end of the list."""
+    def append(self, data: int) -> None:
         if not self.head:
             self.head = Node(data)
             return
@@ -17,15 +17,13 @@ class LinkedList:
         current.next = Node(data)
 
     def print_list(self):
-        """Prints the nodes in the list."""
         current = self.head
         while current:
             print(f"{current.data} -> ", end="")
             current = current.next
         print("None")
 
-    def find_kth_to_last(self, key):
-        """Finds the k-th to last element."""
+    def find_kth_to_last(self, key: int) -> int:
         if not self.head:
             raise ValueError("List is empty!")
         
@@ -41,8 +39,7 @@ class LinkedList:
         
         return second.data if second else None
         
-    def delete_middle_node(self):
-        """Deletes the middle node of the list."""
+    def delete_middle_node(self) -> None:
         if not self.head or not self.head.next: 
             print("The list is too short to have a middle node.")
 
@@ -57,8 +54,7 @@ class LinkedList:
         if prev:
             prev.next = slow.next
         
-    def partition(self, value):
-        """Reaaranges the list according to a pivot value."""
+    def partition(self, value: int) -> None:
         if not self.head or not self.head.next: return
 
         less_head = less = Node(0)
@@ -85,8 +81,8 @@ class LinkedList:
         less.next = equal_head.next or greater_head.next
         self.head = less_head.next
 
-    def reverse(self, head):
-        """Rearranges the list by reversing it."""
+    @staticmethod
+    def reverse(head: Node) -> Node:
         prev = None
         current = head
 
@@ -98,8 +94,7 @@ class LinkedList:
         
         return prev
 
-    def add_reverse_order(self, l1, l2):
-        """Adds numbers in the list in reverse order."""
+    def add_in_reverse_order(self, l1: Node, l2: Node) -> LinkedList:
         result = LinkedList()
         carry = 0
 
@@ -117,18 +112,16 @@ class LinkedList:
         result.head = self.reverse(result.head)
         return result        
     
-    def add_forward_order(self, l1, l2):
-        """Adds the numbers in the list in forward order."""
+    def add_in_forward_order(self, l1: Node, l2: Node) -> LinkedList:
         l1 = self.reverse(l1)
         l2 = self.reverse(l2)
 
-        reversed_result = self.add_reverse_order(l1, l2)
+        reversed_result = self.add_in_reverse_order(l1, l2)
         reversed_result.head = self.reverse(reversed_result.head)
 
         return reversed_result
 
-    def remove_duplicates(self):
-        """Removes duplicates from the list."""
+    def remove_duplicates(self) -> None:
         if not self.head: return
 
         uniques = set()
@@ -144,8 +137,7 @@ class LinkedList:
             
             current = prev.next
         
-    def is_palindrome(self):
-        """Checks if the list is palindrome."""
+    def is_palindrome(self) -> bool:
         if not self.head: return 
 
         slow = fast = self.head
@@ -165,8 +157,8 @@ class LinkedList:
         
         return True
     
-    def get_length(self, head):
-        """Returns the length of a list."""
+    @staticmethod
+    def get_length(head: Node) -> int:
         length = 0
         current = head
         while current:
@@ -175,8 +167,7 @@ class LinkedList:
         
         return length
 
-    def first_intersection(self, l1, l2):
-        """Finds a interaction between two list if it exists."""
+    def find_intersection(self, l1: Node, l2: Node) -> Node:
         len1 = self.get_length(l1)
         len2 = self.get_length(l2)
 
@@ -196,8 +187,7 @@ class LinkedList:
 
         return None  
 
-    def detect_loop(self, head):
-        """Detects loop in the list if any"""
+    def detect_loop(self, head: LinkedList) -> Node:
         slow = fast = head 
 
         while fast and fast.next:

@@ -1,3 +1,6 @@
+from typing import List
+from collections import deque
+
 class PostingListNode:
     def __init__(self):
         self.order = -1
@@ -6,38 +9,30 @@ class PostingListNode:
 
 class Stacks:
     def __init__(self):
-        self.mainstack = []
-        self.maxstack = []
-        self.wellformed = []
-        self.stackpath = []
-        self.sunsetview = []
+        self._main_stack: List[int] = []
+        self._max_stack: List[int] = []
 
-    # Push a value onto the stack.
-    def push(self, value):
-        self.mainstack.append(value)
+    def push(self, value: int) -> None:
+        self._main_stack.append(value)
+        max_value = max(value, self._max_stack[-1] if self._max_stack else value)
+        self._max_stack.append(max_value)
 
-        if not self.maxstack or value >= self.mainstack[-1]:
-            self.maxstack.append(value)
-        else:
-            self.maxstack.append(self.maxstack[-1])
-
-    # Pop the top value from the stack.
-    def pop(self):
-        if not self.mainstack:
+    def pop(self) -> int:
+        if not self._main_stack:
             raise IndexError("Stack is empty.")
 
-        self.mainstack.pop()
-        self.maxstack.pop()
+        self._max_stack.pop()
+        return self._main_stack.pop()
 
-    # Returns the maximum value in the stock.
-    def max(self):
-        if not self.maxstack:
+    def max(self) -> int:
+        if not self._max_stack:
             raise IndexError("Stack is empty.")
         
-        return self.maxstack[-1]
-    
-    # Checks strings if they are well-formed.
-    def isWellFormed(self, s):
+        return self._max_stack[-1]
+
+    @staticmethod
+    def is_well_formed(s: str) -> bool:
+        stack = deque()
         bracket_pairs = {
             ')': '(',
             '}': '{',
@@ -46,48 +41,45 @@ class Stacks:
 
         for ch in s:
             if ch in "({[":
-                self.wellformed.append(ch)
+                stack.append(ch)
             elif ch in ")}]":
-                if not self.wellformed or self.wellformed[-1] != bracket_pairs[ch]:
+                if not stack or stack[-1] != bracket_pairs[ch]:
                     return False
                 
-                self.wellformed.pop()
+                stack.pop()
         
-        return not self.wellformed
+        return not stack
 
-    # Simplifies the given paths.
-    def simplifyPath(self, path):
-        self.stackpath.clear()
-        tokens = path.split('/')
+    @staticmethod
+    def simplify_path(path: str) -> str:
+        stack = deque()
 
-        for token in tokens:
+        for token in path.split('/'):
             if token == "." or not token:
                 continue
             elif token == "..":
-                if self.stackpath:
-                    self.stackpath.pop()
+                if stack:
+                    stack.pop()
             else:
-                self.stackpath.append(token)
+                stack.append(token)
         
-        simplified_path = "/" + "/".join(self.stackpath)
+        simplified_path = "/" + "/".join(stack)
 
         return simplified_path
-    
-    # Recursive solution for setting jump order.
+
     @staticmethod
-    def setJumpOrderRecursive(node, order):
+    def set_jump_order_recursive(node: PostingListNode, order: List[int]) -> None:
         if not node or node.order != -1:
             return
         
         node.order = order[0]
         order[0] += 1
         
-        Stacks.setJumpOrderRecursive(node.jump, order)
-        Stacks.setJumpOrderRecursive(node.next, order)
+        Stacks.set_jump_order_recursive(node.jump, order)
+        Stacks.set_jump_order_recursive(node.next, order)
 
-    # Iterative solution for setting jump order.
     @staticmethod
-    def setJumpOrderIterative(head):
+    def set_jump_order_iterative(head: PostingListNode) -> None:
         if not head:
             return
         
@@ -96,35 +88,28 @@ class Stacks:
 
         while stackorder:
             node = stackorder.pop()
-
             if node and node.order == -1:
                 node.order = order
                 order += 1
-                
                 if node.next:
                     stackorder.append(node.next)
                 if node.jump:
                     stackorder.append(node.jump)
-    
-    # Prints the postings list with orders.
+
     @staticmethod
-    def printPostingList(head):
+    def print_posting_list(head: PostingListNode) -> None:
         node = head
         while node:
             print(f"Node Order: {node.order}")
             node = node.next
 
-    # Finds the windows that have a sunset view.
-    def findBuildingsWithSunsetView(self, buildings):
+    @staticmethod
+    def find_buildings_with_sunset_view(buildings: List[int]) -> List[int]:
+        stack = deque()
         for i in range(len(buildings) - 1, -1, -1):
-            while self.sunsetview and buildings[self.sunsetview[-1]] <= buildings[i]:
-                self.sunsetview.pop()
+            while stack and buildings[stack[-1]] <= buildings[i]:
+                stack.pop()
 
-            self.sunsetview.append(i)
+            stack.append(i)
 
-        result = []
-
-        while self.sunsetview:
-            result.append(self.sunsetview.pop())
-
-        return result
+        return list(reversed(stack))

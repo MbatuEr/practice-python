@@ -17,19 +17,19 @@ class Stacks:
         max_value = max(value, self._max_stack[-1] if self._max_stack else value)
         self._max_stack.append(max_value)
 
-    def pop(self) -> int:
+    def pop(self) -> None:
         if not self._main_stack:
             raise IndexError("Stack is empty.")
 
         self._max_stack.pop()
-        return self._main_stack.pop()
+        self._main_stack.pop()
 
     def max(self) -> int:
         if not self._max_stack:
             raise IndexError("Stack is empty.")
         
         return self._max_stack[-1]
-
+    
     @staticmethod
     def is_well_formed(s: str) -> bool:
         stack = deque()
@@ -49,7 +49,7 @@ class Stacks:
                 stack.pop()
         
         return not stack
-
+ 
     @staticmethod
     def simplify_path(path: str) -> str:
         stack = deque()
@@ -62,11 +62,9 @@ class Stacks:
                     stack.pop()
             else:
                 stack.append(token)
-        
-        simplified_path = "/" + "/".join(stack)
-
-        return simplified_path
-
+    
+        return "/" + "/".join(stack)
+    
     @staticmethod
     def set_jump_order_recursive(node: PostingListNode, order: List[int]) -> None:
         if not node or node.order != -1:
@@ -83,19 +81,19 @@ class Stacks:
         if not head:
             return
         
-        stackorder = [head]
+        stack_order = [head]
         order = 0
 
-        while stackorder:
-            node = stackorder.pop()
+        while stack_order:
+            node = stack_order.pop()
             if node and node.order == -1:
                 node.order = order
                 order += 1
                 if node.next:
-                    stackorder.append(node.next)
+                    stack_order.append(node.next)
                 if node.jump:
-                    stackorder.append(node.jump)
-
+                    stack_order.append(node.jump)
+    
     @staticmethod
     def print_posting_list(head: PostingListNode) -> None:
         node = head
@@ -109,7 +107,6 @@ class Stacks:
         for i in range(len(buildings) - 1, -1, -1):
             while stack and buildings[stack[-1]] <= buildings[i]:
                 stack.pop()
-
             stack.append(i)
 
         return list(reversed(stack))

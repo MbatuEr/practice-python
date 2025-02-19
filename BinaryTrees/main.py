@@ -9,12 +9,12 @@ if __name__ == "__main__":
     for values in items_to_insert:
         tree.insert(values)
 
-    print(tree.lookUp(3)) 
-    print(tree.lookUp(7)) 
+    print(tree.lookup(3)) 
+    print(tree.lookup(7)) 
     print(tree.remove(3))  
-    print(tree.lookUp(3))  
+    print(tree.lookup(3))  
     print(tree.remove(7))
-    print(tree.lookUp(7))  
+    print(tree.lookup(7))  
     print("----------------------------------------------------------")
 
     # Check if the tree is symmetrical.
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     root_symmetrical.right.left = TreeNode(4)
     root_symmetrical.right.right = TreeNode(3)
 
-    if tree.isSymmetric(root_symmetrical):
+    if tree.is_symmetric(root_symmetrical):
         print("The tree is symmetric.")
     else:
         print("The tree is not symmetric.")
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     p = 3
     q = 6
 
-    lca = tree_LCA.findLCA(tree_LCA.root, p, q)
+    lca = tree_LCA.find_lca(tree_LCA.root, p, q)
     if lca:
         print(f"The lowest common ancestor of {p} and {q} is {lca.val}")
     else:
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     rootsum.right.left.right.left.right = TreeNode(1)
 
     print("Sum of binary numbers represented by root-to-leaf paths:",
-          tree.sumRootToLeaf(rootsum))
+          tree.sum_root_to_leaf(rootsum))
     print("----------------------------------------------------------")
 
     # Path weight equals a target value
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     target_weight = 20
     current_value = 0
 
-    if tree.hasPathWeight(path_weight.root, target_weight, current_value):
+    if tree.has_path_weight(path_weight.root, target_weight, current_value):
         print(f"There exists a leaf whose path weight equals {target_weight}.")
     else:
         print(f"No leaf path weight equals {target_weight}.")
@@ -94,21 +94,21 @@ if __name__ == "__main__":
         tree_order.insert(val)
 
     k = 7
-    inorder_traversal = tree_order.inorderTraversal(tree_order.root, k)
+    inorder_traversal = tree_order.inorder_traversal(tree_order.root, k)
     print("The inorder traversal of the binary tree:", inorder_traversal)
     print("----------------------------------------------------------")
 
     # Preorder traversal without recursion.
-    preorder_traversal = tree_order.preorderTraversal(tree_order.root)
+    preorder_traversal = tree_order.preorder_traversal(tree_order.root)
 
     print("The preorder traversal of the binary tree:", preorder_traversal)
     print("----------------------------------------------------------")
     
     # Successor of a root.
-    node = tree_order.findValue(10)
+    node = tree_order.find_value(10)
     if node:
         print(f"node found: {node.val}")
-        successor = tree_order.computeSuccessor(node)
+        successor = tree_order.compute_successor(node)
 
         if successor:
             print(f"Successor of {node.val} is: {successor.val}")
@@ -120,32 +120,32 @@ if __name__ == "__main__":
 
     # Inorder travelsal with O(1) space complexity.
     print("The inorder traversal of the binary tree: ",end="")
-    tree_order.inorderTraversalWithO1Space(tree_order.root)
+    tree_order.inorder_traversal_with_constant_space(tree_order.root)
     print("\n----------------------------------------------------------")
 
     # Build a binary tree.
     inorder = [4, 5, 6, 7, 8, 9, 10, 12, 13, 14]
     preorder = [8, 6, 4, 5, 7, 10, 9, 13, 12, 14]
 
-    root_order = tree.buildTree(preorder, inorder)
+    root_order = tree.build_tree(preorder, inorder)
     k = 3
     print("Inorder traversal of the reconstructed tree:")
-    inorder_traversal_tree = tree.inorderTraversal(root_order, k)
+    inorder_traversal_tree = tree.inorder_traversal(root_order, k)
     print(inorder_traversal_tree)
 
     print("Preorder traversal of the reconstructed tree:")
-    preorder_traversal_tree = tree.preorderTraversal(root_order)
+    preorder_traversal_tree = tree.preorder_traversal(root_order)
     print(preorder_traversal_tree)
     print("\n----------------------------------------------------------")
 
     # Reconstruct preorder traversal.
-    tree_order.reconstructPreorder(tree_order.root)
+    tree_order.reconstruct_preorder(tree_order.root)
     print("\n----------------------------------------------------------")
 
     # Create list from leaves.
-    leaflist = tree_order.createListFromLeaves(tree_order.root)
+    leaflist = tree_order.create_list_from_leaves(tree_order.root)
     print("Linked list of leaves: ", end=" ")
-    tree_order.printLinkedList(leaflist)
+    tree_order.print_linked_list(leaflist)
     print("\n----------------------------------------------------------")
     
     # Compute exterior. 
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     root_exterior = [8,4,13,2,5,11,16,1,3,7,12,14,18,6]
     for i in root_exterior:
         exterior.insert(i)
-    exterior.exteriorOfBinaryTree(exterior.root)
+    exterior.exterior_of_binary_tree(exterior.root)
     print("\n----------------------------------------------------------")
 
     # Right sibling tree.
@@ -162,8 +162,8 @@ if __name__ == "__main__":
     for values in right_sibling:
         sibling.insert(values)
     
-    sibling.rightSiblingTree(sibling.root)
-    sibling.printLevelNext(sibling.root)
+    sibling.right_sibling_tree(sibling.root)
+    sibling.print_level_next(sibling.root)
     print("----------------------------------------------------------")
 
     # Lock the node.
@@ -173,9 +173,9 @@ if __name__ == "__main__":
     for values in root_lock:
         locked.insert(values)
     
-    lock_node1 = locked.findValue(1)
-    lock_node3 = locked.findValue(3)
-    lock_node2 = locked.findValue(2)
+    lock_node1 = locked.find_value(1)
+    lock_node3 = locked.find_value(3)
+    lock_node2 = locked.find_value(2)
 
     print(f"Locking node 1: {'Success' if locked.lock(lock_node1) else 'Failed'}")
     print(f"Locking node 3: {'Success' if locked.lock(lock_node3) else 'Failed'}")
@@ -193,14 +193,14 @@ if __name__ == "__main__":
     for value in root_bst:
         bst.insert(value)
 
-    if bst.is_BST():
+    if bst.is_bst():
         print("The tree satisfies the BST property.")
     else:
         print("The tree does NOT satisfy the BST property.")
     print("----------------------------------------------------------")
     # Find the first key greater than the input key
     input_key = 13
-    first_key = bst.firstKeyGreater(input_key)
+    first_key = bst.first_key_greater(input_key)
 
     if first_key != -1:
         print(f"The first key greater than {input_key} is {first_key}.")
@@ -210,9 +210,9 @@ if __name__ == "__main__":
 
     # Largest elements.
     number_of_largest_items = 3
-    tree.largestElement(tree_order.root, number_of_largest_items)
+    tree.largest_element(tree_order.root, number_of_largest_items)
     print("\n----------------------------------------------------------")
 
     # Level order tree traversal.
-    tree.levelOrderTraversal(tree_order.root)
+    tree.level_order_traversal(tree_order.root)
     print("----------------------------------------------------------")

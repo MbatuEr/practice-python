@@ -32,25 +32,23 @@ class Pair:
     def __lt__(self, other):
         if self.freq == other.freq:
             return self.str > other.str
-        return self.freq > other.freq
+        return self.freq < other.freq
 
 class Heapq:
     def __init__(self):
         self.min_heap = []
-        
+    
     def merge_sorted_arrays(self, sorted_arrays: List[List[int]]) -> List[int]:
-        for i, array in enumerate(sorted_arrays):
-            if array:
+        for i, arr in enumerate(sorted_arrays):
+            if arr:
                 heapq.heappush(self.min_heap, Element(sorted_arrays[i][0], i, 0))
         
         result = []
-
         while self.min_heap:
             current = heapq.heappop(self.min_heap)
             result.append(current.value)
 
             next_element_index = current.element_index + 1
-
             if next_element_index < len(sorted_arrays[current.array_index]):
                 next_value = sorted_arrays[current.array_index][next_element_index]
                 heapq.heappush(self.min_heap, Element(next_value, current.array_index, next_element_index))
@@ -76,8 +74,8 @@ class Heapq:
             return sorted_arrays
         sorted_arrays = split_into_sorted_subarrays(arr)
         return self.merge_sorted_arrays(sorted_arrays)
-
-    def sort_k_sorted_array(self, arr: List[int], k: int) -> List[int]:
+    
+    def sort_almost_sorted_array(self, arr: List[int], k: int) -> List[int]:
         result = []
 
         for num in arr[:k + 1]:
@@ -94,7 +92,8 @@ class Heapq:
     
     @staticmethod
     def find_k_closest_stars(stars: List[List[Star]], k: int) -> List[Star]:
-        if k <= 0 : return []
+        if k <= 0 : 
+            return []
         return heapq.nsmallest(k, stars, key=lambda star: star.distance_to_earth())
     
     @staticmethod
@@ -102,9 +101,9 @@ class Heapq:
         max_heap = []  # Store negative values for max behavior
         min_heap = []  
         result = []
+
         for x in sequence:
             heapq.heappush(min_heap, -heapq.heappushpop(max_heap, x))
-
             if len(min_heap) > len(max_heap):
                 heapq.heappush(max_heap, -heapq.heappop(min_heap))
 
@@ -112,22 +111,19 @@ class Heapq:
             result.append(-median)
 
         return result
-
+    
     @staticmethod
-    def find_k_largest_elements(arr, k):
+    def find_k_largest_elements(arr: List[int], k: int) -> List[int]:
         if k  <= 0: return []
         return heapq.nlargest(k, arr)
 
-    @staticmethod
-    def most_frequent_strings(strs: List[str], k: int) -> List[str]:
+    def most_frequent_strings(self, strs: List[str], k: int) -> List[str]:
         freqs = Counter(strs)
-        min_heap = []
+
         for str, freq in freqs.items():
-            heapq.heappush(min_heap, Pair(str, freq))
-            if len(min_heap) > k:
-                heapq.heappop(min_heap)
+            heapq.heappush(self.min_heap, Pair(str, freq))
+            if len(self.min_heap) > k:
+                heapq.heappop(self.min_heap)
         
-        res = [heapq.heappop(min_heap).str for _ in range(k)]
+        res = [heapq.heappop(self.min_heap).str for _ in range(k)]
         return res
-    
-    

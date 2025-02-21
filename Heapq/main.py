@@ -11,25 +11,26 @@ if __name__ == "__main__":
     ]
     merged_sequence = pq.merge_sorted_arrays(sequences)
     print("Merged Sorted Sequence:", merged_sequence)
-    print("-----------------------------------------------------------")
+    print("-" * 60)
 
-    # Sorting an increasing-decreasing array
+    # Increasing-decreasing array
     arr = [57, 131, 493, 294, 221, 339, 418, 452, 442, 190]
     sorted_array = pq.sort_increasing_decreasing_array(arr)
     print("Sorted Array:", sorted_array)
-    print("-----------------------------------------------------------")
+    print("-" * 60)
 
-    # Sorting an array which is k away at most.
+    # An almost sorted array 
     k_sorted_arr = [3, -1, 2, 6, 4, 5, 8]
     k = 2
-    sorted_arr = pq.sort_k_sorted_array(k_sorted_arr, k)
+    sorted_arr = pq.sort_almost_sorted_array(k_sorted_arr, k)
 
     print("Sorted array: ", end= " ")
     for num in sorted_arr:
         print(num, end=" ")
-    print("\n-----------------------------------------------------------")
+    print()
+    print("-" * 60)
 
-    # Closest stars.
+    # Closest stars
     stars = [
         Star(1, 2, 3),
         Star(5, 5, 5),
@@ -42,13 +43,14 @@ if __name__ == "__main__":
 
     closest_stars = pq.find_k_closest_stars(stars, 3)
     print(closest_stars)
-    print("-----------------------------------------------------------")
+    print("-" * 60)
 
-    # Calculating median at each step.
+    # Find median
     sequence = [1, 0, 3, 5, 2, 0, 1]
     median = pq.online_median(sequence)
     print(median, end=" ")
-    print("\n-----------------------------------------------------------")
+    print()
+    print("-" * 60)
     
     # Max elements
     x = 3
@@ -56,11 +58,12 @@ if __name__ == "__main__":
 
     values = pq.find_k_largest_elements(max_values, x)
     print(f"Highest {x} values are:", *values)
-    print("-----------------------------------------------------------")
+    print("-" * 60)
 
     # Most frequent word
-    input_str = ["go", "coding" , "byte", " byte", " go", "interview", "go"]
+    input_str = ["go", "coding" , "byte", "byte", "go", "interview", "go"]
     k = 2
     result = pq.most_frequent_strings(input_str, k)
     print(result, end=" ")
     print()
+    print("-" * 60)

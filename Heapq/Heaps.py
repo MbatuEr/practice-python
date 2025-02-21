@@ -1,5 +1,6 @@
-import heapq
 from typing import List 
+from collections import Counter
+import heapq
 import math
 
 class Element:
@@ -23,15 +24,21 @@ class Star:
     def __repr__(self):
         return f"Star({self.x}, {self.y}, {self.z})"
 
+class Pair:
+    def __init__(self, str, freq):
+        self.str = str
+        self.freq = freq
+
+    def __lt__(self, other):
+        if self.freq == other.freq:
+            return self.str > other.str
+        return self.freq > other.freq
 
 class Heapq:
     def __init__(self):
         self.min_heap = []
-        self.left = []
-        self.right = []
         
     def merge_sorted_arrays(self, sorted_arrays: List[List[int]]) -> List[int]:
-        """Merges k sorted arrays."""
         for i, array in enumerate(sorted_arrays):
             if array:
                 heapq.heappush(self.min_heap, Element(sorted_arrays[i][0], i, 0))
@@ -51,9 +58,7 @@ class Heapq:
         return result
 
     def sort_increasing_decreasing_array(self, arr: List[int]) -> List[int]:
-        """Sorts an increasing-decreasing array."""
         def split_into_sorted_subarrays(arr: List[int]) -> List[List[int]]:
-            """Splits the array into k sorted subarrays."""
             sorted_arrays = []
             increasing = True
             start = 0
@@ -72,8 +77,7 @@ class Heapq:
         sorted_arrays = split_into_sorted_subarrays(arr)
         return self.merge_sorted_arrays(sorted_arrays)
 
-    def sort_k_sorted_array(self, arr, k):
-        """Sorts an array that elements of it k away at most from its correct sorted position."""
+    def sort_k_sorted_array(self, arr: List[int], k: int) -> List[int]:
         result = []
 
         for num in arr[:k + 1]:
@@ -88,32 +92,42 @@ class Heapq:
         
         return result
     
-    def find_k_closest_stars(self, stars: List[List[Star]], k: int) -> List[Star]:
-        """Finds the k closest stars to Earth."""
+    @staticmethod
+    def find_k_closest_stars(stars: List[List[Star]], k: int) -> List[Star]:
         if k <= 0 : return []
-
         return heapq.nsmallest(k, stars, key=lambda star: star.distance_to_earth())
     
-    def insert_for_median(self, num: int):
-        """Returns the current median of inserted numbers."""
-        if not self.left or num <= -self.left[0]:
-            heapq.heappush(self.left, -num)
-        else:
-            heapq.heappush(self.right, num)
-        
-        if len(self.left) > len(self.right) + 1:
-            heapq.heappush(self.right, -heapq.heappop(self.left))
-        elif len(self.right) > len(self.left):
-            heapq.heappush(self.left, -heapq.heappop(self.right))
-    
-    def get_median(self) -> float:
-        """Returns the current median of inserted numbers."""
-        if len(self.left) > len(self.right):
-            return -self.left[0]
-        
-        return (-self.left[0] + self.right[0]) / 2.0
-    
-    def find_k_largest_elements(self, arr, k):
-        if k  <= 0: return []
+    @staticmethod
+    def online_median(sequence: List[int]) -> List[float]:
+        max_heap = []  # Store negative values for max behavior
+        min_heap = []  
+        result = []
+        for x in sequence:
+            heapq.heappush(min_heap, -heapq.heappushpop(max_heap, x))
 
+            if len(min_heap) > len(max_heap):
+                heapq.heappush(max_heap, -heapq.heappop(min_heap))
+
+            median = (-max_heap[0] + min_heap[0]) / 2 if len(max_heap) == len(min_heap) else -max_heap[0]
+            result.append(-median)
+
+        return result
+
+    @staticmethod
+    def find_k_largest_elements(arr, k):
+        if k  <= 0: return []
         return heapq.nlargest(k, arr)
+
+    @staticmethod
+    def most_frequent_strings(strs: List[str], k: int) -> List[str]:
+        freqs = Counter(strs)
+        min_heap = []
+        for str, freq in freqs.items():
+            heapq.heappush(min_heap, Pair(str, freq))
+            if len(min_heap) > k:
+                heapq.heappop(min_heap)
+        
+        res = [heapq.heappop(min_heap).str for _ in range(k)]
+        return res
+    
+    

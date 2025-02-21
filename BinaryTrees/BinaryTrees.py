@@ -1,4 +1,5 @@
 from collections import deque
+from typing import List
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -19,12 +20,12 @@ class BinaryTree:
     def __init__(self):
         self.root = None
 
-    def insert(self, key):
+    def insert(self, key: int) -> bool:
         if not self.root:
             self.root = TreeNode(key)
             return True
 
-        def insert_helper(node, key):
+        def insert_helper(node, key: int) -> bool:
             if key == node.val:
                 return False
 
@@ -45,8 +46,8 @@ class BinaryTree:
 
         return insert_helper(self.root, key)
 
-    def lookup(self, key):
-        def lookup_helper(node, key):
+    def lookup(self, key: int) -> bool:
+        def lookup_helper(node, key: int) -> bool:
             if not node:
                 return False
             
@@ -57,9 +58,9 @@ class BinaryTree:
     
         return lookup_helper(self.root, key)
   
-    def remove(self, key):
+    def remove(self, key: int) -> bool:
         removed = [False]
-        def remove_helper(node, key, removed):
+        def remove_helper(node, key: int, removed: List[bool]) -> TreeNode:
             if not node:
                 return None
             
@@ -76,7 +77,7 @@ class BinaryTree:
                     return node.left
                 
                 # Find the minimum node in the right subtree.
-                def find_min(node):
+                def find_min(node: TreeNode) -> TreeNode:
                     while node.left:
                         node = node.left
                     return node
@@ -90,11 +91,11 @@ class BinaryTree:
         self.root = remove_helper(self.root, key, removed)
         return removed[0]
 
-    def is_symmetric(self, root):
+    def is_symmetric(self, root: TreeNode) -> TreeNode:
         if not root: 
             return False
         
-        def is_mirror(left, right):
+        def is_mirror(left: TreeNode, right: TreeNode) -> bool:
             if not left and not right:
                 return True
             if not right or not left or left.val != right.val:
@@ -105,7 +106,7 @@ class BinaryTree:
 
         return is_mirror(root.left, root.right)
 
-    def find_lca(self, root, p, q):
+    def find_lca(self, root: TreeNode, p: int, q: int) -> TreeNode:
         if not root or root.val == p or root.val == q:
             return root
         
@@ -117,8 +118,8 @@ class BinaryTree:
         
         return left if left else right
 
-    def sum_root_to_leaf(self, root):
-        def dfs(node, current_sum):         # Apply depth-first search.
+    def sum_root_to_leaf(self, root: TreeNode) -> int:
+        def dfs(node: TreeNode, current_sum: int) -> int:         # Apply depth-first search.
             if not node:
                 return 0
 
@@ -130,7 +131,7 @@ class BinaryTree:
         
         return dfs(root, 0)
 
-    def has_path_weight(self, node, target_weight, current_weight):
+    def has_path_weight(self, node: TreeNode, target_weight: int, current_weight: int) -> bool:
         if not node:
             return False
         
@@ -142,14 +143,14 @@ class BinaryTree:
         return (self.has_path_weight(node.left, target_weight, current_weight) or 
                 self.has_path_weight(node.right, target_weight, current_weight))
 
-    def inorder_traversal(self, root, k):
+    def inorder_traversal(self, k: int) -> List[int]:
         result = []
-        if root is None:
+        if self.root is None:
             return result
         
         counter = 0
         node_stack = []
-        current = root
+        current = self.root
 
         while current or node_stack:
             if current:
@@ -167,12 +168,12 @@ class BinaryTree:
         
         return result
 
-    def preorder_traversal(self, root):
+    def preorder_traversal(self) -> List[int]:
         result = []
-        if not root:
+        if not self.root:
             return result
         
-        node_stack = [root]
+        node_stack = [self.root]
         while node_stack:
             current = node_stack.pop()
             if current:
@@ -181,7 +182,7 @@ class BinaryTree:
 
         return result
 
-    def compute_successor(self, node):
+    def compute_successor(self, node: TreeNode) -> TreeNode:
         if not node:
             return None
         
@@ -197,8 +198,8 @@ class BinaryTree:
         
         return node.parent
 
-    def inorder_traversal_with_constant_space(self, root):
-        if not root:
+    def inorder_traversal_with_constant_space(self) -> None:
+        if not self.root:
             return
         
         current = self.root
@@ -221,10 +222,10 @@ class BinaryTree:
                 prev = current
                 current = current.parent
 
-    def build_tree(self, preorder, inorder):
+    def build_tree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         in_map = {val: idx for idx, val in enumerate(inorder)}
 
-        def build_tree_helper(pre_start, pre_end, in_start, in_end):
+        def build_tree_helper(pre_start: int, pre_end: int, in_start: int, in_end: int) -> TreeNode:
             if pre_start > pre_end or in_start > in_end:
                 return None
 
@@ -241,11 +242,31 @@ class BinaryTree:
 
         return build_tree_helper(0, len(preorder) - 1, 0, len(inorder) - 1)
 
-    def reconstruct_preorder(self, node):
-        if not node:
+    def recursive_inorder_traversal(self, root: TreeNode, result: List[int]) -> None:
+        if not root: 
+            return result
+
+        self.recursive_inorder_traversal(root.left, result)
+        result.append(root.val)
+        self.recursive_inorder_traversal(root.right, result)
+
+        return result 
+
+    def recursive_preorder_traversal(self, root: TreeNode, result: List[int]) -> None:
+        if not root:
+            return result
+        
+        result.append(root.val)
+        self.recursive_preorder_traversal(root.left, result)
+        self.recursive_preorder_traversal(root.right, result)
+
+        return result
+    
+    def reconstruct_preorder(self) -> None:
+        if not self.root:
             return
 
-        node_stack = [node]
+        node_stack = [self.root]
         while node_stack:
             current = node_stack.pop()
             print(current.val, end=" ")
@@ -260,10 +281,10 @@ class BinaryTree:
             else:
                 print("NONE", end=" ")
 
-    def create_list_from_leaves(self, root):
+    def create_list_from_leaves(self) -> ListNode:
         dummy = ListNode(-1)
 
-        def collect_leaves(root, current):
+        def collect_leaves(root: TreeNode, current: ListNode):
             if not root:
                 return current  
 
@@ -276,27 +297,27 @@ class BinaryTree:
 
             return current
         
-        collect_leaves(root, dummy)
+        collect_leaves(self.root, dummy)
         return dummy.next
 
-    def print_linked_list(self, head):
+    def print_linked_list(self, head: ListNode) -> None:
         while head:
             print(head.val, end=" ")
             head = head.next
 
-    def exterior_of_binary_tree(self, root):
-        if not root:
+    def exterior_of_binary_tree(self) -> None:
+        if not self.root:
             return
         
-        current = root
+        current = self.root
         while current.left:
             print(current.val,end=" ")
             current = current.left
         
-        leaves = self.create_list_from_leaves(root)
+        leaves = self.create_list_from_leaves()
         self.print_linked_list(leaves)
 
-        right_subtree = root
+        right_subtree = self.root
         node_stack = []
 
         while right_subtree.right:
@@ -308,12 +329,12 @@ class BinaryTree:
             if last_part_of_tree.left or last_part_of_tree.right:
                 print(last_part_of_tree.val,end=" ")
 
-    def right_sibling_tree(self, root):
-        if not root:
+    def right_sibling_tree(self) -> None:
+        if not self.root:
             return None
         
-        if root.left or root.right:
-            def connect_siblings(left, right):
+        if self.root.left or self.root.right:
+            def connect_siblings(left: TreeNode, right: TreeNode) -> None:
                 if not left or not right:
                     return
 
@@ -323,13 +344,13 @@ class BinaryTree:
                 connect_siblings(right.left, right.right)
                 connect_siblings(left.right, right.left)
 
-            return connect_siblings(root.left, root.right)
+            return connect_siblings(self.root.left, self.root.right)
 
-    def print_level_next(self, root):
-        if not root:
+    def print_level_next(self) -> None:
+        if not self.root:
             return
 
-        current = root
+        current = self.root
         while current:
             temp = current
             print(temp.val, end=" ")
@@ -349,7 +370,7 @@ class BinaryTree:
             else:
                 current = None
     
-    def find_value(self, value):
+    def find_value(self, value: int) -> TreeNode:
         current = self.root
         while current and current.val != value:
             if value < current.val:
@@ -360,7 +381,7 @@ class BinaryTree:
         return current
     
     @staticmethod
-    def can_lock_or_unlock(node):
+    def can_lock_or_unlock(node: TreeNode) -> bool:
         if not node: 
             return False
         
@@ -375,7 +396,7 @@ class BinaryTree:
 
         return True
 
-    def lock(self, node):
+    def lock(self, node: TreeNode) -> bool:
         if not self.can_lock_or_unlock(node):
             return False
         
@@ -388,7 +409,7 @@ class BinaryTree:
         return True
         
 
-    def unlock(self, node):
+    def unlock(self, node: TreeNode) -> bool:
         if not self.can_lock_or_unlock(node):
             return False
         
@@ -400,8 +421,8 @@ class BinaryTree:
         
         return True
 
-    def is_bst(self):
-        def is_bst_helper(node, min_value, max_value):
+    def is_bst(self) -> bool:
+        def is_bst_helper(node, min_value: int, max_value: int) -> bool:
             if not node:
                 return True
 
@@ -413,7 +434,7 @@ class BinaryTree:
         
         return is_bst_helper(self.root, float('-inf'), float('inf'))
 
-    def first_key_greater(self, input_value):
+    def first_key_greater(self, input_value: int) -> int:
         first_so_far = None
         current = self.root
         while current:
@@ -424,31 +445,21 @@ class BinaryTree:
         
         return first_so_far.val
 
-    def recursive_inorder_traversal(self, root, result):
-        if not root: 
-            return result
-
-        self.recursive_inorder_traversal(root.left, result)
-        result.append(root.val)
-        self.recursive_inorder_traversal(root.right, result)
-
-        return result 
-
-    def largest_elements(self, root, k):
-        if not root: 
+    def largest_elements(self, k: int) -> None:
+        if not self.root: 
             return
         
         largest_elements = []
-        result = self.recursive_inorder_traversal(root, largest_elements)
+        result = self.recursive_inorder_traversal(self.root, largest_elements)
 
         for i in range(len(result) - 1, len(result) - k - 1, -1):
             print(result[i], end=" ")
 
-    def level_order_traversal(self, root):
-        if not root:
+    def level_order_traversal(self) -> None:
+        if not self.root:
             return
 
-        q = deque([root])
+        q = deque([self.root])
         while q:
             level_size = len(q)
             current_level = []

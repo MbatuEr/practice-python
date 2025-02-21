@@ -94,12 +94,12 @@ if __name__ == "__main__":
         tree_order.insert(val)
 
     k = 7
-    inorder_traversal = tree_order.inorder_traversal(tree_order.root, k)
+    inorder_traversal = tree_order.inorder_traversal(k)
     print("The inorder traversal of the binary tree:", inorder_traversal)
     print("-" * 60)
 
     # Preorder traversal without recursion
-    preorder_traversal = tree_order.preorder_traversal(tree_order.root)
+    preorder_traversal = tree_order.preorder_traversal()
 
     print("The preorder traversal of the binary tree:", preorder_traversal)
     print("-" * 60)
@@ -120,7 +120,7 @@ if __name__ == "__main__":
 
     # Inorder traversal with O(1) space
     print("The inorder traversal of the binary tree: ",end="")
-    tree_order.inorder_traversal_with_constant_space(tree_order.root)
+    tree_order.inorder_traversal_with_constant_space()
     print()
     print("-" * 60)
 
@@ -131,21 +131,23 @@ if __name__ == "__main__":
     root_order = tree.build_tree(preorder, inorder)
     k = 3
     print("Inorder traversal of the reconstructed tree:")
-    inorder_traversal_tree = tree.inorder_traversal(root_order, k)
+    inorder_traversal_tree = []
+    tree.recursive_inorder_traversal(root_order, inorder_traversal_tree)
     print(inorder_traversal_tree)
 
     print("Preorder traversal of the reconstructed tree:")
-    preorder_traversal_tree = tree.preorder_traversal(root_order)
+    preorder_traversal_tree = []
+    tree.recursive_preorder_traversal(root_order, preorder_traversal_tree)
     print(preorder_traversal_tree, end="\n")
     print("-" * 60)
 
     # Reconstructing preorder traversal
-    tree_order.reconstruct_preorder(tree_order.root)
+    tree_order.reconstruct_preorder()
     print()
     print("-" * 60)
 
     # List from leaves
-    leaflist = tree_order.create_list_from_leaves(tree_order.root)
+    leaflist = tree_order.create_list_from_leaves()
     print("Linked list of leaves: ", end=" ")
     tree_order.print_linked_list(leaflist)
     print()
@@ -156,7 +158,7 @@ if __name__ == "__main__":
     root_exterior = [8,4,13,2,5,11,16,1,3,7,12,14,18,6]
     for i in root_exterior:
         exterior.insert(i)
-    exterior.exterior_of_binary_tree(exterior.root)
+    exterior.exterior_of_binary_tree()
     print()
     print("-" * 60)
 
@@ -166,8 +168,8 @@ if __name__ == "__main__":
     for values in right_sibling:
         sibling.insert(values)
     
-    sibling.right_sibling_tree(sibling.root)
-    sibling.print_level_next(sibling.root)
+    sibling.right_sibling_tree()
+    sibling.print_level_next()
     print("-" * 60)
 
     # Locking nodes
@@ -215,10 +217,10 @@ if __name__ == "__main__":
 
     # Largest elements
     number_of_largest_items = 3
-    tree.largest_elements(tree_order.root, number_of_largest_items)
+    tree_order.largest_elements(number_of_largest_items)
     print()
     print("-" * 60)
 
     # Level order tree traversal
-    tree.level_order_traversal(tree_order.root)
+    tree_order.level_order_traversal()
     print("-" * 60)

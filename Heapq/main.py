@@ -46,10 +46,8 @@ if __name__ == "__main__":
 
     # Calculating median at each step.
     sequence = [1, 0, 3, 5, 2, 0, 1]
-
-    for num in sequence:
-        pq.insert_for_median(num)
-        print(pq.get_median(), end=" ")
+    median = pq.online_median(sequence)
+    print(median, end=" ")
     print("\n-----------------------------------------------------------")
     
     # Max elements
@@ -59,3 +57,10 @@ if __name__ == "__main__":
     values = pq.find_k_largest_elements(max_values, x)
     print(f"Highest {x} values are:", *values)
     print("-----------------------------------------------------------")
+
+    # Most frequent word
+    input_str = ["go", "coding" , "byte", " byte", " go", "interview", "go"]
+    k = 2
+    result = pq.most_frequent_strings(input_str, k)
+    print(result, end=" ")
+    print()

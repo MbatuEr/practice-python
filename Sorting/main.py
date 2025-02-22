@@ -9,11 +9,12 @@ if __name__ == "__main__":
     A = [1, 3, 5, 0, 0, 0]
     B = [2, 4, 6]
     m = n = 3
-    sort.merge_sorted_arrays(A, m, B, n)
+    sort.merge_two_sorted_arrays(A, m, B, n)
 
     for i in range(0, m + n):
         print(A[i], end=" ")
-    print("\n--------------------------------------------------------------")
+    print()
+    print("-" * 60)
     
     # Anagrams next to each other.
     strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
@@ -21,7 +22,8 @@ if __name__ == "__main__":
 
     for str in strs:
         print(str, end=" ")
-    print("\n--------------------------------------------------------------")
+    print()
+    print("-" * 60)
 
     # Searching in an unsorted list.
     arr = [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14]
@@ -33,7 +35,7 @@ if __name__ == "__main__":
         print(f"Element {target} found at index: {result}")
     else:
         print(f"Element {target} not found in the array.")
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Searching in a sorted list.
     sorts = Sorting([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
@@ -45,7 +47,7 @@ if __name__ == "__main__":
         print(f"Element {x} found at index: {index}")
     else:
         print(f"Element {x} not found in the array.")
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Sorting by heap sort.
     data = [
@@ -59,7 +61,7 @@ if __name__ == "__main__":
     chunks = sort.split_into_chunks(data, chunk_size)
     sorted_data = sort.merge_chunks(chunks)
     print("Sorted data:\n", sorted_data)
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Max number of concurrent events.
     events = [(1, 3), (2, 4), (5, 8), (6, 7), (8, 9), (14, 17), (4, 6), (1, 5), (13, 15)]
@@ -68,7 +70,7 @@ if __name__ == "__main__":
     result_of_events = sort.max_concurrent_events(event_objects)
 
     print(f"Maximum number of concurrent events: {result_of_events}")
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Union of intervals.
     intervals = [
@@ -79,7 +81,8 @@ if __name__ == "__main__":
     print(f"Union of intervals: ")
     for interval in unions:
         print(f"({interval.start}, {interval.end})", end=" ")
-    print("\n--------------------------------------------------------------")
+    print()
+    print("-" * 60)
 
     # Sorting string & int pairs by integers.
     students = [
@@ -94,7 +97,7 @@ if __name__ == "__main__":
 
     print("After sorting by age:")
     print(students)
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Sorting into two different arrays.
     fenerbahce = [
@@ -110,7 +113,7 @@ if __name__ == "__main__":
     ]
 
     sort.team_photo(fenerbahce, galatasaray)
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Perform quick sort.
     qvec = [10, 80, 30, 90, 40, 50, 70]
@@ -119,7 +122,7 @@ if __name__ == "__main__":
 
     print("Sorted Array:", end=" ")
     sorting.print_values()
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Perform bucket sort.
     bucket_arr = [0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68]
@@ -127,7 +130,7 @@ if __name__ == "__main__":
     print("Original array:", bucket_arr)
     sort.bucket_sort(bucket_arr)
     print("Sorted array:", bucket_arr)
-    print("--------------------------------------------------------------")
+    print("-" * 60)
 
     # Perform radix sort.
     radix_arr = [17012, 45345, 75234, 90714, 12802, 234, 23, 4466]
@@ -135,4 +138,4 @@ if __name__ == "__main__":
     print("Original array:", radix_arr)
     sort.radix_sort(radix_arr)
     print("Sorted array:", radix_arr)
-    print("--------------------------------------------------------------")
+    print("-" * 60)

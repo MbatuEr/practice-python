@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections import deque
+from typing import List
 import heapq
 import random
 
@@ -30,9 +30,9 @@ class Team:
 class Sorting:
     def __init__(self, data = None):
         self.data = data if data is not None else []
-        
-    def merge_sorted_arrays(self, A, m, B, n):
-        """Merges two array in sorted order."""
+    
+    @staticmethod
+    def merge_two_sorted_arrays(A: List[int], m: int, B: List[int], n: int) -> None:
         i, j, k = m - 1, n - 1, m + n - 1
 
         while i >= 0 and j >= 0:
@@ -41,8 +41,8 @@ class Sorting:
 
         A[:j + 1] = B[:j + 1] 
     
-    def group_anagrams(self, strs):
-        """Groups anagrams together in-place and reverses the list."""
+    @staticmethod
+    def group_anagrams(strs: List[str]) -> List[List[str]]:
         anagram_groups = defaultdict(list)
 
         for word in strs:
@@ -51,8 +51,8 @@ class Sorting:
         
         strs[:] = [anagram for group in anagram_groups.values() for anagram in group]
 
-    def find_in_rotated_array(self, arr, target):
-        """Checks a given input whether it's in the array or not."""
+    @staticmethod
+    def find_in_rotated_array(arr: List[int], target: int) -> int:
         left, right = 0, len(arr) - 1
         
         while left <= right:
@@ -60,21 +60,22 @@ class Sorting:
             if arr[mid] == target:
                 return mid
             
-            (left, right) = (mid + 1, right) if arr[mid] <= target <= arr[right] else (left, mid - 1)
-            (right, left) = (mid - 1, left) if arr[left] <= target <= arr[mid] else (right, mid + 1)
+            if arr[left] <= arr[mid]:
+                (left, right) = (mid + 1, right) if arr[mid] <= target <= arr[right] else (left, mid - 1)
+            else:
+                (right, left) = (mid - 1, left) if arr[left] <= target <= arr[mid] else (right, mid + 1)
 
         return -1 
     
-    def find_element(self, x):
-        """Finds the index of x in an unbounded sorted list."""
-        
-        def element_at(index):
-            """Returns element at index or inf if out of bounds."""
+    def find_element(self, x: int) -> int:
+        def element_at(index: int) -> int:
             return self.data[index] if 0 <= index < len(self.data) else float('inf')
 
         index = 1
-        while element_at(index) != float('inf') and element_at(index) < x:
+        val = element_at(index)
+        while val != float('inf') and val < x:
             index *= 2
+            val = element_at(index)         # Store value to avoid redundant calls
 
         left, right = index // 2, index
 
@@ -90,13 +91,13 @@ class Sorting:
                 left = mid + 1
 
         return -1
-        
-    def split_into_chunks(self, data, chunk_size):
-        """Splits the data into chunks and sorts each chunk."""
+    
+    @staticmethod
+    def split_into_chunks(data: List[str], chunk_size: int) -> List[List[str]]:
         return [sorted(data[i:i + chunk_size]) for i in range(0, len(data), chunk_size)]
 
-    def merge_chunks(self, chunks):
-        """Merges the sorted chunks using a min-heap."""
+    @staticmethod
+    def merge_chunks(chunks: List[List[str]]) -> List[str]:
         min_heap = []
         result = []
 
@@ -114,26 +115,27 @@ class Sorting:
         
         return result
 
-    def max_concurrent_events(self, events):
-        """Determines the max number of events that take place concurrently."""
-        events.sort(key = lambda event: event.end)
-
+    @staticmethod
+    def max_concurrent_events(events: Event) -> int:
+        events.sort(key = lambda event: event.start)
+        min_heap = []
         max_concurrent = 0
-        active = deque()
 
         for event in events:
-            while active and active[0].end <= event.start:
-                active.popleft()
+            while min_heap and min_heap[0] <= event.start:
+                heapq.heappop(min_heap)
 
-            active.append(event)
-            max_concurrent = max(max_concurrent, len(active))
-        
+            heapq.heappush(min_heap, event.end)
+            max_concurrent = max(max_concurrent, len(min_heap))
+
         return max_concurrent
     
-    def compute_union(self, intervals):
-        """Computes the union of intervals."""
+    @staticmethod
+    def compute_union(intervals: List[Event]) -> List[Event]:
+        if not intervals:
+            return []
+        
         intervals.sort(key = lambda event: (event.start, event.end))
-
         result = []
         current = intervals[0]
 
@@ -147,14 +149,13 @@ class Sorting:
         result.append(current)
         return result
 
-    def sorting_students_by_age(self, students):
-        """Sorts string and integer pairs by comparing integers."""
+    @staticmethod
+    def sorting_students_by_age(students: List[Student]) -> None:
         students.sort(key=lambda student: student.age)
 
-    def team_photo(self, team1, team2):
-        """Sorts two unsorted vectors into two different arrays."""
-        def print_lines(front_line, back_line):
-            """Prints the sorted arrays."""
+    @staticmethod
+    def team_photo(team1: List[Team], team2: List[Team]) -> None:
+        def print_lines(front_line: List[Team], back_line: List[Team]) -> None:
             print("Front Line:", front_line)
             print("Back Line:", back_line)
         
@@ -188,11 +189,9 @@ class Sorting:
         print_lines(front_line, back_line)
 
     def print_values(self):
-        """Prints the values in the data."""
         print(" ".join(map(str, self.data)))
 
-    def quick_sort(self, low = 0, high = None):
-        """Function to perform Quick Sort."""
+    def quick_sort(self, low = 0, high = None) -> None:
         if high is None:
             high = len(self.data) - 1
         
@@ -203,22 +202,24 @@ class Sorting:
         pivot = self.data[pivot_index]
 
         i,j = low, high
-        while i <= j:
-            while i <= high and self.data[i] < pivot:
+        while True:
+            while self.data[i] < pivot:
                 i += 1
-            while j >= low and self.data[j] > pivot:
+            while self.data[j] > pivot:
                 j -= 1
             
-            if i <= j:
-                self.data[i], self.data[j] = self.data[j], self.data[i]
-                i += 1
-                j -= 1
+            if i >= j:
+                break       # Stop when pointers cross
+            
+            self.data[i], self.data[j] = self.data[j], self.data[i]  
+            i += 1
+            j -= 1
         
         self.quick_sort(low, j)
-        self.quick_sort(i, high)
-
-    def bucket_sort(self, arr):
-        """Function to perform Bucket Sort."""
+        self.quick_sort(j + 1, high)
+    
+    @staticmethod
+    def bucket_sort(arr: List[float]) -> None:
         if len(arr) <= 1:
             return
 
@@ -235,10 +236,9 @@ class Sorting:
         
         arr[:] = sorted_arr
     
-    def radix_sort(self, arr):
-        """Radix Sort implementation."""
-        def counting_sort(arr, exp):
-            """Counting sort for a specific digit represented by given value."""
+    @staticmethod
+    def radix_sort(arr: List[int]) -> None:
+        def counting_sort(arr: List[int], exp: int) -> None:
             n = len(arr)
             output = [0] * n
             count = [0] * 10

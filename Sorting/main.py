@@ -4,7 +4,7 @@ from sorting import Student
 from sorting import Team
 
 if __name__ == "__main__":
-    # Merge arrays.
+    # Merge arrays
     sort = Sorting()
     A = [1, 3, 5, 0, 0, 0]
     B = [2, 4, 6]
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     print()
     print("-" * 60)
     
-    # Anagrams next to each other.
+    # Grouping anagrams
     strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
     sort.group_anagrams(strs)
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     print()
     print("-" * 60)
 
-    # Searching in an unsorted list.
+    # Searching in a rotated list
     arr = [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14]
     target = 3
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         print(f"Element {target} not found in the array.")
     print("-" * 60)
 
-    # Searching in a sorted list.
+    # Searching in an infinite list
     sorts = Sorting([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
     x = 9
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         print(f"Element {x} not found in the array.")
     print("-" * 60)
 
-    # Sorting by heap sort.
+    # Split and merge 
     data = [
         "zebra", "apple", "orange", "mango", "banana",
         "kiwi", "grape", "pear", "peach", "strawberry",
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     print("Sorted data:\n", sorted_data)
     print("-" * 60)
 
-    # Max number of concurrent events.
+    # Max concurrent events
     events = [(1, 3), (2, 4), (5, 8), (6, 7), (8, 9), (14, 17), (4, 6), (1, 5), (13, 15)]
 
     event_objects = [Event(start, end) for start, end in events]
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     print(f"Maximum number of concurrent events: {result_of_events}")
     print("-" * 60)
 
-    # Union of intervals.
+    # Union of intervals
     intervals = [
         Event(0, 3), Event(1, 1), Event(2, 4), Event(3, 4), Event(5, 7), Event(7, 8), Event(8, 11), 
         Event(9, 11), Event(12, 14), Event(12, 16), Event(12, 14), Event(13, 15), Event(16, 17)]
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     print()
     print("-" * 60)
 
-    # Sorting string & int pairs by integers.
+    # Sorting student by age.
     students = [
         Student("Alice", 20), Student("Bob", 22), Student("Charlie", 20),
         Student("David", 21), Student("Eve", 22), Student("Frank", 21)
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     print(students)
     print("-" * 60)
 
-    # Sorting into two different arrays.
+    # Sorting into two different arrays
     fenerbahce = [
         Team("Livakovic", 190), Team("Kadioglu", 180), Team("Djiku", 188),
         Team("Becao", 194), Team("Osayi", 184), Team("Ismail", 183), Team("Fred", 173),
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     sort.team_photo(fenerbahce, galatasaray)
     print("-" * 60)
 
-    # Perform quick sort.
+    # Perform quick sort
     qvec = [10, 80, 30, 90, 40, 50, 70]
     sorting = Sorting(qvec)
     sorting.quick_sort()
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     sorting.print_values()
     print("-" * 60)
 
-    # Perform bucket sort.
+    # Perform bucket sort
     bucket_arr = [0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68]
 
     print("Original array:", bucket_arr)
@@ -132,10 +132,17 @@ if __name__ == "__main__":
     print("Sorted array:", bucket_arr)
     print("-" * 60)
 
-    # Perform radix sort.
+    # Perform radix sort
     radix_arr = [17012, 45345, 75234, 90714, 12802, 234, 23, 4466]
 
     print("Original array:", radix_arr)
     sort.radix_sort(radix_arr)
     print("Sorted array:", radix_arr)
+    print("-" * 60)
+
+    # Quick select
+    select = [5, 2, 4, 3, 1, 6]
+    nth_index = 3
+    res = sort.kth_largest_integer(select, nth_index)
+    print(f"{nth_index}th largest element in the list: {res}")
     print("-" * 60)

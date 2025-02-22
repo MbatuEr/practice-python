@@ -1,7 +1,6 @@
 from collections import defaultdict
 from typing import List
-import heapq
-import random
+import heapq, random
 
 class Event:
     def __init__(self, start, end):
@@ -13,7 +12,7 @@ class Student:
         self.name = name
         self.age = age
     
-    def __repr__(self):     # To print team members in a readable format.
+    def __repr__(self):     # To print students in a readable format
         return f"({self.name}, {self.age})" 
     
 class Team:
@@ -21,10 +20,10 @@ class Team:
         self.name = name
         self.height = height
 
-    def __lt__(self, other):    # Define less-than operator for sorting.
+    def __lt__(self, other):    # Less-than operator for sorting
         return self.height < other.height
 
-    def __repr__(self):     # To print team members in a readable format.
+    def __repr__(self):     # To print team members in a readable format
         return f"({self.name}, {self.height})"
 
 class Sorting:
@@ -61,9 +60,9 @@ class Sorting:
                 return mid
             
             if arr[left] <= arr[mid]:
-                (left, right) = (mid + 1, right) if arr[mid] <= target <= arr[right] else (left, mid - 1)
+                (left, right) = (mid + 1, right) if arr[mid] < target <= arr[right] else (left, mid - 1)
             else:
-                (right, left) = (mid - 1, left) if arr[left] <= target <= arr[mid] else (right, mid + 1)
+                (right, left) = (mid - 1, left) if arr[left] <= target < arr[mid] else (right, mid + 1)
 
         return -1 
     
@@ -161,10 +160,7 @@ class Sorting:
         
         team1.sort()
         team2.sort()
-
-        front_line = []
-        back_line = []
-
+        front_line, back_line = [], []
         team1_idx, team2_idx = 0, 0
 
         while team1_idx < len(team1) and team2_idx < len(team2) and len(front_line) < len(team1):
@@ -188,7 +184,7 @@ class Sorting:
 
         print_lines(front_line, back_line)
 
-    def print_values(self):
+    def print_values(self) -> None:
         print(" ".join(map(str, self.data)))
 
     def quick_sort(self, low = 0, high = None) -> None:
@@ -265,3 +261,35 @@ class Sorting:
         while max_val // exp > 0:
             counting_sort(arr, exp)
             exp *= 10
+
+    def kth_largest_integer(self, nums: List[int], k: int) -> int:
+        return self.quick_select(nums, 0, len(nums) - 1, k)
+    
+    def quick_select(self, nums: List[int], left: int, right: int, k: int) -> None:
+        n = len(nums)
+        if left >= right:
+            return nums[left]
+        
+        random_index = random.randint(left, right)
+        nums[random_index], nums[right] = nums[right], nums[random_index]
+        pivot_index = self.partition(nums, left, right)
+
+        if pivot_index < n - k:
+            return self.quick_select(nums, pivot_index + 1, right, k)
+        elif  pivot_index > n - k:
+            return self.quick_select(nums, left, pivot_index - 1, k)
+        else:
+            return nums[pivot_index]
+    
+    @staticmethod
+    def partition(nums: List[int], left: int, right: int) -> int:
+        pivot = nums[right]
+        lo = left
+        for i in range(left, right):
+            if nums[i] < pivot:
+                nums[lo], nums[i] = nums[i], nums[lo]
+                lo += 1
+        
+        nums[lo], nums[right] = nums[right], nums[lo]
+        return lo
+        

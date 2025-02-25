@@ -29,6 +29,7 @@ class Team:
 class Sorting:
     def __init__(self, data = None):
         self.data = data if data is not None else []
+        self.memo = {}
     
     @staticmethod
     def merge_two_sorted_arrays(A: List[int], m: int, B: List[int], n: int) -> None:
@@ -265,7 +266,7 @@ class Sorting:
     def kth_largest_integer(self, nums: List[int], k: int) -> int:
         return self.quick_select(nums, 0, len(nums) - 1, k)
     
-    def quick_select(self, nums: List[int], left: int, right: int, k: int) -> None:
+    def quick_select(self, nums: List[int], left: int, right: int, k: int) -> int:
         n = len(nums)
         if left >= right:
             return nums[left]
@@ -292,4 +293,3 @@ class Sorting:
         
         nums[lo], nums[right] = nums[right], nums[lo]
         return lo
-        

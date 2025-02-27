@@ -1,4 +1,4 @@
-from graphs import GraphNode, Graphs
+from graphs import GraphNode, Graphs, MergingCommunities
 
 if __name__ == "__main__":
     graph = Graphs()
@@ -64,4 +64,67 @@ if __name__ == "__main__":
     print("Shortest transformation sequence is:", shortest_path_length)
     print("-" * 60)
 
+    # Merging communities
+    n = 5
+    com = MergingCommunities(n)
+    if com.connect(0, 1):
+        print("Node 0 and node 1 are connected.")
+    if com.connect(1, 2):
+        print("Node 1 and node 2 are connected.")
+    print("Community size of the node 3:", com.get_community_size(3))
+    print("Community size of the node 0:", com.get_community_size(0))
+    if com.connect(3, 4):
+        print("Node 3 and node 4 are connected.")
+    print("Community size of the node 4:", com.get_community_size(4))
+    print("-" * 60)
 
+    # Connecting dots (Kruskal's Algorithm)
+    dots = [[1, 1], [2, 6], [3, 2], [4, 3], [7, 1]]
+    mst = graph.connect_the_dots(dots)
+    print("The weight of the MST:", mst)
+    print("-" * 60)
+
+    # Prerequisites (Kahn's Algorithm)
+    pre = 6
+    prereq = [[0, 1], [0, 2], [3, 2], [1, 4], [2, 4], [4, 5]]
+    if graph.prerequisites(pre, prereq):
+        print("The graph does not contain a cycle.")
+    else:
+        print("The graph contains a cycle.")
+    print("-" * 60)
+
+    # Shortest path (Dijkstra's Algorithm)
+    start, number_of_nodes = 0, 6
+    edges_dijkstra = [[0, 1, 5], [0, 2, 3], [1, 2, 1], 
+             [1, 3, 4], [2, 3, 4], [2, 4, 5]]
+    
+    shortest_dijkstra = graph.dijkstra_s_algorithm(number_of_nodes, edges_dijkstra, start)
+    print("The shortest path:", shortest_dijkstra)
+    print("-" * 60)
+
+    # Shortest path (Bellman-Ford Algorithm)
+    edges_bellman = [
+        [0, 1, -1], [0, 2, 4], [1, 2, 3], [1, 3, 2],
+        [1, 4, 2], [3, 2, 5], [3, 1, 1], [4, 3, -3]
+    ]
+    num_vertices = 5
+    source = 0
+
+    shortest_bellman = graph.bellman_ford(num_vertices, edges_bellman, source)
+    print("Shortest distances from source:", shortest_bellman)
+    print("-" * 60)
+
+    # Floyd-Warshall Algorithm
+    INF = float("inf")
+    graph_fw = [
+        [0, 3, INF, 5],
+        [2, 0, INF, 4],
+        [INF, 1, 0, INF],
+        [INF, INF, 2, 0]
+    ]
+
+    shortest_fw = graph.floyd_warshall(graph_fw)
+    print("Shortest distance between all vertices:")
+    for row in shortest_fw:
+        print(row)
+    print("-" * 60)

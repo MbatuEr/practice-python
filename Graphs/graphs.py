@@ -1,23 +1,62 @@
-from typing import Dict, List
-from collections import deque
-import string
+from typing import Dict, List, Tuple
+from collections import deque, defaultdict
+import string, heapq
+
 class GraphNode:
     def __init__(self, val: int):
         self.val = val
         self.neighbors = []
+
+class UnionFind:
+    def __init__(self, size: int):
+        self.parent = [i for i in range(size)]
+        self.size = [1] * size
+    
+    def union(self, x: int, y: int) -> bool:
+        rep_x, rep_y = self.find(x), self.find(y)
+        if rep_x != rep_y:
+            if self.size[rep_x] > self.size[rep_y]:
+                self.parent[rep_y] = rep_x
+                self.size[rep_x] += self.size[rep_y]
+            else:
+                self.parent[rep_x] = rep_y
+                self.size[rep_y] += self.size[rep_x]
+            return True
+        
+        return False
+    
+    def find(self, x: int) -> int:
+        if x == self.parent[x]:
+            return x
+        
+        self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def get_size(self, x: int) -> int:
+        return self.size[self.find(x)]
+  
+class MergingCommunities:
+    def __init__(self, n: int):
+        self.uf = UnionFind(n)
+    
+    def connect(self, x: int, y: int) -> None:
+        return self.uf.union(x, y)
+    
+    def get_community_size(self, x: int) -> int:
+        return self.uf.get_size(x)
 
 class Graphs:
     @staticmethod
     def graph_deep_copy(node : GraphNode) -> GraphNode:
         if not node:
             return None
+
         def dfs(node: GraphNode, clone_map: Dict[GraphNode, GraphNode]) -> GraphNode:
             if node in clone_map:
                 return clone_map[node]
 
             cloned_node = GraphNode(node.val)
             clone_map[node] = cloned_node
-
             for neighbor in node.neighbors:
                 cloned_neighbor = dfs(neighbor, clone_map)
                 cloned_node.neighbors.append(cloned_neighbor)
@@ -35,6 +74,7 @@ class Graphs:
                 if matrix[r][c] == 1:
                     self.dfs_for_count_island(r, c, matrix)
                     count += 1
+
         return count    
     
     def dfs_for_count_island(self, r: int, c: int, matrix: List[List[int]]) -> None:
@@ -166,3 +206,105 @@ class Graphs:
                         dictionary_set.remove(next_word) 
         
         return False
+    
+    @staticmethod
+    def connect_the_dots(points: List[List[int]]) -> int:
+        n = len(points)
+        edges = []
+        for i in range(n):
+            for j in range(i + 1, n):
+                cost = (abs(points[i][0] - points[j][0]) +
+                        abs(points[i][1] - points[j][1]))
+                edges.append((cost, i, j))
+            
+        edges.sort()
+        uf = UnionFind(n)
+        total_cost = edges_added = 0
+
+        # Implement Kruskal's Algorithm.
+        for cost, p1, p2 in edges:
+            if uf.union(p1, p2):
+                total_cost += cost
+                edges_added += 1
+                if edges_added == n - 1:
+                    return total_cost
+    
+    @staticmethod
+    def prerequisites(n: int, prerequisites: List[List[int]]) -> bool:
+        graph = defaultdict(list)
+        in_degrees = [0] * n
+        for prerequsite, course in prerequisites:
+            graph[prerequsite].append(course)
+            in_degrees[course] += 1
+        
+        queue = deque()
+        for i in range(n):
+            if in_degrees[i] == 0:
+                queue.append(i)
+        enrolled_courses = 0
+
+        # Perform topological sort (Kahn's Algorithm).
+        while queue:
+            node = queue.popleft()
+            enrolled_courses += 1
+            for neighbor in graph[node]:
+                in_degrees[neighbor] -= 1
+                if in_degrees[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        return enrolled_courses == n
+    
+    @staticmethod
+    def dijkstra_s_algorithm(n: int, edges: List[int], start: int) -> List[int]:
+        graph = defaultdict(list)
+        distances = [float("inf")] * n
+        distances[start] = 0
+
+        for u, v, w in edges:
+            graph[u].append((v, w))
+            graph[v].append((u, w))
+        
+        min_heap = [(0, start)]
+        while min_heap:
+            curr_dist, curr_node = heapq.heappop(min_heap)
+            if curr_dist > distances[curr_node]:
+                continue
+            
+            for neighbor, weight in graph[curr_node]:
+                neighbor_dist = curr_dist + weight
+                if neighbor_dist < distances[neighbor]:
+                    distances[neighbor] = neighbor_dist
+                    heapq.heappush(min_heap, (neighbor_dist, neighbor))
+
+        return [-1 if dist == float("inf") else dist for dist in distances]
+    
+    @staticmethod
+    def bellman_ford(num_vertices: int, edges: List[Tuple[int, int, int]], src: int) -> List[float]:
+        dist = [float("inf")] * num_vertices
+        dist[src] = 0
+
+        # Relax all edges v - 1 times
+        for _ in range(num_vertices - 1):
+            for u, v, w in edges:
+                if dist[u] != float("inf") and dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+        
+        # Check for negative cycles
+        for u,v, w in edges:
+            if dist[u] != float("inf") and dist[u] + w < dist[v]:
+                print("Graph contains a negative weighted cycle!")
+                return None
+        
+        return dist
+
+    @staticmethod
+    def floyd_warshall(graph: List[List[float]]) -> List[List[float]]:
+        num_vertices = len(graph)
+        dist = [row[:] for row in graph]
+        for k in range(num_vertices):    
+            for i in range(num_vertices):    
+                for j in range(num_vertices): 
+                    if dist[i][k] != float("inf") and dist[k][j] != float("inf"):
+                        dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+        
+        return dist

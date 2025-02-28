@@ -63,32 +63,31 @@ class Graphs:
 
             return cloned_node
         return dfs(node, {})
-
-    def count_island(self, matrix: List[List[int]]) -> int:
+    
+    def count_island(self, matrix : List[List[int]]) -> int:
         if not matrix:
             return 0
-                        
+        
+        def dfs(r: int, c: int, matrix: List[List[int]]) -> None:
+            matrix[r][c] = -1
+            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+            for dr, dc in directions:
+                next_r, next_c = r + dr, c+ dc
+                if self.is_within_bounds(next_r, next_c, matrix) and matrix[next_r][next_c] == 1:
+                    dfs(next_r, next_c, matrix)    
+        
         count = 0
         for r in range(len(matrix)):
             for c in range(len(matrix[0])):
                 if matrix[r][c] == 1:
-                    self.dfs_for_count_island(r, c, matrix)
+                    dfs(r, c, matrix)
                     count += 1
-
-        return count    
-    
-    def dfs_for_count_island(self, r: int, c: int, matrix: List[List[int]]) -> None:
-        matrix[r][c] = -1
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        for dr, dc in directions:
-            next_r, next_c = r + dr, c + dc
-            if (self.is_within_bounds(next_r, next_c, matrix) 
-                and matrix[next_r][next_c] == 1):
-                self.dfs_for_count_island(next_r, next_c, matrix)
+        
+        return count
 
     @staticmethod
-    def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
-        return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])                
+    def is_within_bounds(r: int , c: int, matrix: List[List[int]]) -> bool:
+        return 0 <= r < len(matrix) and 0 <= c < len(matrix[0]) 
 
     def matrix_infection(self, matrix: List[List[int]]) -> int:
         if not matrix:
@@ -136,37 +135,35 @@ class Graphs:
             if colors[i] == 0 and not dfs(i, 1):
                 return False
         
-        return True    
-
+        return True  
+    
     def longest_increasing_path(self, matrix: List[List[int]]) -> int:
         if not matrix:
             return 0
-        
+
+        def dfs(r: int, c: int, matrix: List[List[int]], memo: List[List[int]]) -> int:
+            if memo[r][c] != 0:
+                return memo[r][c]
+
+            max_path = 1
+            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+            for dr, dc in directions:
+                next_r, next_c = r + dr, c+ dc
+                if self.is_within_bounds(next_r, next_c, matrix) and matrix[next_r][next_c] > matrix[r][c]:
+                    max_path = max(max_path, 1 + dfs(next_r, next_c, matrix, memo))
+
+            memo[r][c] = max_path
+            return max_path
+
         res = 0
         m, n = len(matrix), len(matrix[0])
         memo = [[0] * n for _ in range(m)]
         for r in range(m):
             for c in range(n):
-                res = max(res, self.dfs_for_longest_increasing_path(r, c, matrix, memo))
+                res = max(res, dfs(r, c, matrix, memo))
         
         return res
     
-    def dfs_for_longest_increasing_path(self, r: int, c: int, matrix: List[List[int]], 
-                                        memo: List[List[int]]) -> int:
-        if memo[r][c] != 0:
-            return memo[r][c]
-        
-        max_path = 1
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        for dr, dc in directions:
-            next_r, next_c = r + dr, c + dc
-            if(self.is_within_bounds(next_r, next_c, matrix) 
-               and matrix[next_r][next_c] > matrix[r][c]):
-                max_path = max(max_path, 1 + self.dfs_for_longest_increasing_path(next_r, next_c, matrix, memo))       
-        
-        memo[r][c] = max_path
-        return max_path
-
     def shortest_transformation_sequence(self, start: str, end: str, dictionary: List[str]) -> int:
         dictionary_set = set(dictionary)
         if end not in dictionary_set:

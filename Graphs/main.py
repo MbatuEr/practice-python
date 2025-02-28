@@ -95,8 +95,10 @@ if __name__ == "__main__":
 
     # Shortest path (Dijkstra's Algorithm)
     start, number_of_nodes = 0, 6
-    edges_dijkstra = [[0, 1, 5], [0, 2, 3], [1, 2, 1], 
-             [1, 3, 4], [2, 3, 4], [2, 4, 5]]
+    edges_dijkstra = [
+        [0, 1, 5], [0, 2, 3], [1, 2, 1], 
+        [1, 3, 4], [2, 3, 4], [2, 4, 5]
+    ]
     
     shortest_dijkstra = graph.dijkstra_s_algorithm(number_of_nodes, edges_dijkstra, start)
     print("The shortest path:", shortest_dijkstra)

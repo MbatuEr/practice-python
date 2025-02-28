@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # Matrix pathways
     m, n = 3, 3
     matrix = dp.matrix_pathways(m, n)
-    print("Number of pathways to complete the matrix::", matrix)
+    print("Number of different pathways to complete the matrix::", matrix)
     print("-" * 60)
     
     # Max profit

@@ -73,3 +73,22 @@ if __name__ == "__main__":
     print("Area of largest square with value 1:", largest_square)
     print("-" * 60)
     
+    # Levenshtein distance
+    str1 = "Saturday"
+    str2 = "Sundays"
+    distance = dp.levenshtein_distance(str1, str2)
+    print(f"The Levenshtein distance between '{str1}' and '{str2}' is: {distance}")
+    print("-" * 60)
+
+    # Binomial coefficient
+    n, k = 5, 2
+    binomial_result = dp.binomial_coefficient(n, k)
+    print(f"({n} choose {k}) = {binomial_result}") 
+    print("-" * 60)
+
+    # THE BEDBATHANDBEYOND.com problem
+    name = "bedbathandbeyond.com"
+    dictionary = {"bed", "bath", "beyond", "bat", "hand", ".com", "and"}
+    result = dp.decompose_into_dictionary_words(name, dictionary)
+    print(result) 
+    print("-" * 60)

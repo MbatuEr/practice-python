@@ -168,3 +168,67 @@ class Dp:
             prev_row, current_row = current_row, [0] * n
 
         return max_len ** 2
+    
+    @staticmethod
+    def levenshtein_distance(str1: str, str2: str) -> int:
+        len1 = len(str1)
+        len2 = len(str2)
+        dp = [[0] * (len2 + 1) for _ in range(len1 + 1)]
+
+        for i in range(len1 + 1):
+            dp[i][0] = i
+        for j in range(len2 + 1):
+            dp[0][j] = j
+
+        for i in range(1, len1 + 1):
+            for j in range(1, len2 + 1):
+                if str1[i - 1] == str2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = 1 + min(dp[i - 1][j],            # Deletion
+                                       dp[i][ j - 1],           # Insertion
+                                       dp[i - 1][j - 1])        # Substitution
+        return dp[len1][len2]
+
+    @staticmethod
+    def binomial_coefficient(n: int, k: int) -> int:
+        def compute_x_choose_y(x: int, y: int) -> int:
+            if y == 0 or y == x:                                # (n/n) = 1 and (n/0) = 1
+                return 1
+            
+            if x_choose_y[x][y] == 0:                           # (n/k) = (n - 1 / k) + ((n - 1) / (k - 1))
+                without_y = compute_x_choose_y(x - 1, y)    
+                with_y = compute_x_choose_y(x - 1, y - 1)
+                x_choose_y[x][y] = without_y + with_y
+            
+            return x_choose_y[x][y]
+        x_choose_y = [[0] * (k + 1) for _ in range(n + 1)]      
+        return compute_x_choose_y(n, k)
+    
+    @staticmethod
+    def decompose_into_dictionary_words(domain: str, dictionary: set[str]) -> List[str]:
+        n = len(domain)
+        last_length = [-1] * n
+
+        for i in range(n):
+            for j in range(i, -1, -1):
+                word = domain[j:i + 1]
+                if word in dictionary:
+                    if j == 0:
+                        last_length[i] = i + 1
+                    elif last_length[j - 1] != -1:
+                        last_length[i] = i - j + 1
+                    break 
+
+        if last_length[-1] == -1:
+            return None 
+
+        decompositions = []
+        idx = n - 1
+
+        while idx >= 0:
+            word = domain[idx - last_length[idx] + 1:idx + 1]
+            decompositions.append(word)
+            idx -= last_length[idx]
+
+        return decompositions[::-1] 

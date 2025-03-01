@@ -92,3 +92,11 @@ if __name__ == "__main__":
     result = dp.decompose_into_dictionary_words(name, dictionary)
     print(result) 
     print("-" * 60)
+
+    # Pretty print
+    text = "aaa bbb c d ee ff ggggggg"
+    words = text.split()
+    L = 11
+    min_messiness = dp.minimum_messiness(words, L)
+    print(f"Minimum messiness: {min_messiness}")
+    print("-" * 60)

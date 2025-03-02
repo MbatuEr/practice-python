@@ -26,10 +26,9 @@ class Dp:
             two_step_before = one_step_before
             one_step_before = current
         
-        return current
-    
-    @staticmethod
-    def min_coin_combination_top_down(coins: List[int], target: int) -> int:
+        return one_step_before
+
+    def min_coin_combination_top_down(self, coins: List[int], target: int) -> int:
         def top_down_up_dp(coins: List[int], target: int, memo: Dict[int, int]) -> int:
             if target == 0:
                 return 0
@@ -42,7 +41,8 @@ class Dp:
 
             memo[target] = min_coins
             return memo[target]
-        res = top_down_up_dp(coins, target, {})
+        
+        res = top_down_up_dp(coins, target, self.memo)
         return -1 if res == float("inf") else res
     
     @staticmethod
@@ -81,7 +81,7 @@ class Dp:
             prev_prev_max_frofit = prev_max_frofit
             prev_max_frofit = current_profit
 
-        return current_profit
+        return prev_max_frofit
     
     @staticmethod
     def longest_common_subsequence(s1: str, s2: str) -> int:
@@ -165,7 +165,7 @@ class Dp:
                     if matrix[i][j] == 1:
                         current_row[j] = 1 + min(current_row[j - 1], prev_row[j - 1], prev_row[j])
                 max_len = max(max_len, current_row[j])
-            prev_row, current_row = current_row, [0] * n
+            prev_row = current_row
 
         return max_len ** 2
     
@@ -202,6 +202,7 @@ class Dp:
                 x_choose_y[x][y] = without_y + with_y
             
             return x_choose_y[x][y]
+        
         x_choose_y = [[0] * (k + 1) for _ in range(n + 1)]      
         return compute_x_choose_y(n, k)
     
@@ -233,7 +234,7 @@ class Dp:
         return decompositions[::-1] 
     
     @staticmethod
-    def minimum_messiness(words, line_length):
+    def minimum_messiness(words: List[str], line_length: int) -> int:
         num_remaining_blanks = line_length - len(words[0])
         min_messiness = [num_remaining_blanks ** 2] + [float("inf")] * (len(words) - 1)
         

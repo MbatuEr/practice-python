@@ -20,6 +20,7 @@ class Dp:
     def climbing_stairs_bottom_up(n: int) -> int:
         if n <= 2:
             return n
+        
         one_step_before, two_step_before = 2, 1
         for i in range(3, n + 1):
             current = one_step_before + two_step_before
@@ -173,22 +174,22 @@ class Dp:
     def levenshtein_distance(str1: str, str2: str) -> int:
         len1 = len(str1)
         len2 = len(str2)
-        dp = [[0] * (len2 + 1) for _ in range(len1 + 1)]
-
-        for i in range(len1 + 1):
-            dp[i][0] = i
-        for j in range(len2 + 1):
-            dp[0][j] = j
+        prev_row = [0] * (len2 + 1)
+        prev_row[0] = 1
 
         for i in range(1, len1 + 1):
+            current_row = [0] * (len2 + 1)
+            current_row[0] = 1
             for j in range(1, len2 + 1):
                 if str1[i - 1] == str2[j - 1]:
-                    dp[i][j] = dp[i - 1][j - 1]
+                    current_row[j] = prev_row[j - 1]
                 else:
-                    dp[i][j] = 1 + min(dp[i - 1][j],            # Deletion
-                                       dp[i][ j - 1],           # Insertion
-                                       dp[i - 1][j - 1])        # Substitution
-        return dp[len1][len2]
+                    current_row[j] = 1 + min(prev_row[j],            # Deletion
+                                             current_row[j - 1],     # Insertion
+                                             prev_row[j - 1])        # Substitution
+            prev_row = current_row
+
+        return prev_row[len2]
 
     @staticmethod
     def binomial_coefficient(n: int, k: int) -> int:
@@ -247,7 +248,7 @@ class Dp:
                     break
                 
                 first_j_messiness = 0 if j - 1 < 0 else min_messiness[j - 1]
-                current_line_messiness = num_remaining_blanks**2
+                current_line_messiness = num_remaining_blanks ** 2
                 min_messiness[i] = min(min_messiness[i], 
                                        first_j_messiness + current_line_messiness)
         return min_messiness[-1]

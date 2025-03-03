@@ -174,11 +174,10 @@ class Dp:
     def levenshtein_distance(str1: str, str2: str) -> int:
         len1 = len(str1)
         len2 = len(str2)
-        prev_row = [0] * (len2 + 1)
-        prev_row[0] = 1
+        prev_row = list(range(len2 + 1))
 
         for i in range(1, len1 + 1):
-            current_row = [0] * (len2 + 1)
+            current_row = [i] + [0] * len2
             current_row[0] = 1
             for j in range(1, len2 + 1):
                 if str1[i - 1] == str2[j - 1]:

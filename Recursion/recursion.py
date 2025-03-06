@@ -1,16 +1,16 @@
-from typing import List, Dict 
+from typing import List
 import math, itertools
 
 class BinaryTreeNode:
     def __init__(self, val=0, left=None, right=None):
-        self.val  = val
+        self.val = val
         self.left = left
         self.right = right
 
 class Recursion:
     def __init__(self):
         pass
-    
+
     @staticmethod
     def find_all_permutations(nums: List[int]) -> List[List[int]]:
         res = []
@@ -31,18 +31,18 @@ class Recursion:
     @staticmethod
     def find_all_subsets(nums: List[int]) -> List[List[int]]:
         res = []
-        def backtrack(index: int, curr_subset: List[int], nums: List[int], 
-                      res: List[List[int]]) -> None:
+
+        def backtrack(index: int, curr_subset: List[int]):
             if index == len(nums):
                 res.append(curr_subset[:])
-                return 
+                return
             
             curr_subset.append(nums[index])
-            backtrack(index + 1, curr_subset, nums, res)
+            backtrack(index + 1, curr_subset)
             curr_subset.pop()
-            backtrack(index + 1, curr_subset, nums, res)
+            backtrack(index + 1, curr_subset)
 
-        backtrack(0, [], nums, res)
+        backtrack(0, [])
         return res
     
     @staticmethod
@@ -70,7 +70,6 @@ class Recursion:
                 diagonal_set.remove(curr_diagonal)
                 anti_diagonal_set.remove(curr_anti_diagonal)
 
-
         dfs(0, set(), set(), set())
         return res
     
@@ -81,32 +80,34 @@ class Recursion:
         '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
         '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
         }
-        def backtrack(i: int, curr_combination: List[str], digits: str, 
-                      keypad_map: Dict[str, str], res: List[str]) -> None:
+
+        def backtrack(i: int, curr_combination: List[str]) -> None:
             if len(curr_combination) == len(digits):
                 res.append("".join(curr_combination))
                 return
             
             for letter in keypad_map[digits[i]]:
                 curr_combination.append(letter)
-                backtrack(i + 1, curr_combination, digits, keypad_map, res)
+                backtrack(i + 1, curr_combination)
                 curr_combination.pop()
 
-        backtrack(0, [], digits, keypad_map, res)
+        backtrack(0, [])
         return res
-    
-    def compute_tower_of_hanoi(self, n: int, source: str, destination: str, auxilary: str):
+
+    def compute_tower_of_hanoi(self, n: int, source: str, destination: str, 
+                       auxiliary: str) -> None:
         if n == 1:
             print(f"Move disk 1 from {source} to {destination}")
             return
-        
-        self.compute_tower_of_hanoi(n - 1, source, auxilary, destination)
+
+        self.compute_tower_of_hanoi(n - 1, source, auxiliary, destination)
         print(f"Move disk {n} from {source} to {destination}")
-        self.compute_tower_of_hanoi(n - 1, auxilary, destination, source)
+        self.compute_tower_of_hanoi(n - 1, auxiliary, destination, source)
 
     @staticmethod
     def generate_all_subsets_of_size_k(n: int, k: int) -> List[List[int]]:
         res = []
+
         def backtrack(i: int, curr_subset: List[int]) -> None:
             if len(curr_subset) == k:
                 res.append(curr_subset[:])
@@ -139,33 +140,35 @@ class Recursion:
         return res
 
     @staticmethod
-    def palindrome_decompositions(input: str) -> List[List[str]]:
-        def directed_palindrome_decompositions(offset: int, partial_partition: List[str]):
-            if offset == len(input):
-                result.append(partial_partition)
+    def palindrome_decompositions(s: str) -> List[List[str]]:
+        res = []
+        def bactrack(offset: int, partial_partition: List[str]) -> None:
+            if offset == len(s):
+                res.append(partial_partition[:])
                 return
             
-            for i in range(offset + 1, len(input) + 1):
-                prefix = input[offset:i]
+            for i in range(offset + 1, len(s) + 1):
+                prefix = s[offset:i]
                 if prefix == prefix[::-1]:
-                    directed_palindrome_decompositions(i, partial_partition + [prefix])
+                    partial_partition.append(prefix)
+                    bactrack(i, partial_partition)
+                    partial_partition.pop()
 
-        result = []
-        directed_palindrome_decompositions(0, [])
-        return result
-
+        bactrack(0, [])
+        return res
+    
     def generate_all_binary_trees(self, num_nodes: int) -> List[BinaryTreeNode]:
         if num_nodes == 0:
             return [None]
 
-        result = []
+        res = []
         for num_left_tree_nodes in range(num_nodes):
             num_right_tree_nodes = num_nodes - 1 - num_left_tree_nodes
             left_subtrees = self.generate_all_binary_trees(num_left_tree_nodes)
             right_subtrees = self.generate_all_binary_trees(num_right_tree_nodes)
-            result += [BinaryTreeNode(0, left, right)
-                       for left in left_subtrees for right in right_subtrees]
-        return result
+            res += [BinaryTreeNode(0, left, right)
+                    for left in left_subtrees for right in right_subtrees]
+        return res
 
     @staticmethod
     def print_tree_level_order(root: BinaryTreeNode) -> None:

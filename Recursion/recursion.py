@@ -14,17 +14,18 @@ class Recursion:
     @staticmethod
     def find_all_permutations(nums: List[int]) -> List[List[int]]:
         res = []
-        def backtrack(nums: List[int], n: int, res: List[List[int]]) -> None:
+
+        def backtrack(n: int) -> None:
             if n == 1:
                 res.append(nums[:])
                 return
             
             for i in range(n):
                 nums[i], nums[n - 1] = nums[n - 1], nums[i]
-                backtrack(nums, n - 1, res)
+                backtrack(n - 1)
                 nums[i], nums[n - 1] = nums[n - 1], nums[i]
 
-        backtrack(nums, len(nums), res)
+        backtrack(len(nums))
         res.sort()
         return res
     
@@ -46,10 +47,10 @@ class Recursion:
         return res
     
     @staticmethod
-    def n_queens(n: int) -> int:
+    def n_queens(n : int) -> int:
         res = 0
-        def dfs(r: int, diagonal_set: set[int], anti_diagonal_set: set[int],
-                cols_set: set[int]) -> None:
+        def dfs(r: int, cols_set: set[int], diagonal_set: set[int], 
+                anti_diagonal_set: set[int]) -> None:
             nonlocal res
             if r == n:
                 res += 1
@@ -58,14 +59,14 @@ class Recursion:
             for c in range(n):
                 curr_diagonal = r - c
                 curr_anti_diagonal = r + c
-                if (c in cols_set or curr_diagonal in diagonal_set or 
+                if (c in cols_set or curr_diagonal in diagonal_set or
                     curr_anti_diagonal in anti_diagonal_set):
                     continue
 
                 cols_set.add(c)
                 diagonal_set.add(curr_diagonal)
                 anti_diagonal_set.add(curr_anti_diagonal)
-                dfs(r + 1, diagonal_set, anti_diagonal_set, cols_set)
+                dfs(r + 1, cols_set, diagonal_set, anti_diagonal_set)
                 cols_set.remove(c)
                 diagonal_set.remove(curr_diagonal)
                 anti_diagonal_set.remove(curr_anti_diagonal)
@@ -81,21 +82,19 @@ class Recursion:
         '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
         }
 
-        def backtrack(i: int, curr_combination: List[str]) -> None:
-            if len(curr_combination) == len(digits):
-                res.append("".join(curr_combination))
+        def backtrack(i: int, curr_combination: str) -> List[str]:
+            if i == len(digits):
+                res.append(curr_combination)
                 return
             
             for letter in keypad_map[digits[i]]:
-                curr_combination.append(letter)
-                backtrack(i + 1, curr_combination)
-                curr_combination.pop()
+                backtrack(i + 1, curr_combination + letter)
 
-        backtrack(0, [])
+        backtrack(0, "")
         return res
-
-    def compute_tower_of_hanoi(self, n: int, source: str, destination: str, 
-                       auxiliary: str) -> None:
+    
+    def compute_tower_of_hanoi(self, n: int, source: str, destination: str,
+                               auxiliary: str) -> None:
         if n == 1:
             print(f"Move disk 1 from {source} to {destination}")
             return
@@ -107,20 +106,20 @@ class Recursion:
     @staticmethod
     def generate_all_subsets_of_size_k(n: int, k: int) -> List[List[int]]:
         res = []
-
         def backtrack(i: int, curr_subset: List[int]) -> None:
             if len(curr_subset) == k:
                 res.append(curr_subset[:])
                 return
             if i > n:
                 return
-            
+
             backtrack(i + 1, curr_subset)
             curr_subset.append(i)
             backtrack(i + 1, curr_subset)
             curr_subset.pop()
 
         backtrack(1, [])
+        res.reverse()
         return res
 
     @staticmethod
@@ -140,9 +139,9 @@ class Recursion:
         return res
 
     @staticmethod
-    def palindrome_decompositions(s: str) -> List[List[str]]:
+    def palindrome_decompositions(s: str) -> List[str]:
         res = []
-        def bactrack(offset: int, partial_partition: List[str]) -> None:
+        def backtrack(offset: int, partial_partition: List[str]) -> None:
             if offset == len(s):
                 res.append(partial_partition[:])
                 return
@@ -151,10 +150,10 @@ class Recursion:
                 prefix = s[offset:i]
                 if prefix == prefix[::-1]:
                     partial_partition.append(prefix)
-                    bactrack(i, partial_partition)
+                    backtrack(i, partial_partition)
                     partial_partition.pop()
 
-        bactrack(0, [])
+        backtrack(0, [])
         return res
     
     def generate_all_binary_trees(self, num_nodes: int) -> List[BinaryTreeNode]:
@@ -257,14 +256,14 @@ class Recursion:
         if n == 0:
             return 0
         
-        def dfs(node: int, parent: int, adj: List[List[tuple[int, int]]]) -> tuple[int, int]:
+        def dfs(node: int, parent: int) -> tuple[int,int]:
             max_dist = 0
             for to, weight in adj[node]:
                 if to != parent:
-                    _, dist = dfs(to, node, adj)
+                    _, dist = dfs(to, node)
                     max_dist = max(max_dist, dist + weight)
             
             return node, max_dist
 
-        _, diameter = dfs(0, -1, adj)
+        _, diameter = dfs(0, -1)
         return diameter

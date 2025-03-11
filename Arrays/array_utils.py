@@ -5,7 +5,6 @@ from typing import List
 class Array:
     @staticmethod
     def dutch_national_flag(pivot: int, nums: List[int]) -> List[int]:
-        """Sorts a list around a pivot."""
         low, mid, high = 0,0, len(nums) - 1
 
         while mid <= high:
@@ -24,7 +23,6 @@ class Array:
     
     @staticmethod
     def add_binary(s1: str, s2: str) -> str:
-        """Adds two binary numbers represented as strings"""
         i, j, carry = len(s1) - 1,len(s2) - 1, 0
         result = []
 
@@ -45,7 +43,6 @@ class Array:
 
     @staticmethod
     def multiply(v1: List[int], v2: List[int]) -> List[int]:
-        """Multiplies two large integers represented as lists of their digits."""
         n, m = len(v1), len(v2)
         sign = -1 if v1[0] < 0 ^ v2[0] < 0 else 1
         multiplied = [0] * (n + m)
@@ -65,7 +62,6 @@ class Array:
 
     @staticmethod
     def can_reach_end(nums: List[int]) -> bool:
-        """Checks if it is possible to reach the last index of the array by jumping."""
         i, counter, furthest_reach = 0, 0, 0
         last_index = len(nums) - 1
     
@@ -83,12 +79,10 @@ class Array:
 
     @staticmethod
     def remove_duplicates(nums: List[int]) -> List[int]:
-        """Removes duplicate elements from a list while maintaining order."""
         return list(dict.fromkeys(nums))
 
     @staticmethod
     def profit_from_stock(stocklist):
-        """Calculates the maximum profit from a single buy-sell operation."""
         lowest_price, highest_profit = sys.maxsize, 0
 
         for price in stocklist:
@@ -115,7 +109,6 @@ class Array:
     
     @staticmethod
     def permuting_elements(nums1: List[int], nums2: List[int]) -> List[int]:
-        """Rearranges one array based on the permutation order."""
         for i in range(0, len(nums1)):
             nums1[i], nums1[nums2[i]] = nums1[nums2[i]], nums1[i]
             temp = nums2[i] 
@@ -140,7 +133,6 @@ class Array:
 
     @staticmethod
     def offline_sandom_sampling(key: int, nums: List[int]) -> List[int]:
-        """Randomly selects a subset of a specified size from the input array."""
         random.shuffle(nums)
         nums[:] = nums[:key]
         
@@ -227,7 +219,6 @@ class Array:
     
     @staticmethod
     def string_compression(s: str) ->str:
-        """Compresses a string using the counts of repeated characters."""
         count = 1
         compressed = []
         for i in range(1, len(s)):

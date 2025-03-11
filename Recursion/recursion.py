@@ -14,7 +14,6 @@ class Recursion:
     @staticmethod
     def find_all_permutations(nums: List[int]) -> List[List[int]]:
         res = []
-
         def backtrack(n: int) -> None:
             if n == 1:
                 res.append(nums[:])
@@ -32,8 +31,7 @@ class Recursion:
     @staticmethod
     def find_all_subsets(nums: List[int]) -> List[List[int]]:
         res = []
-
-        def backtrack(index: int, curr_subset: List[int]):
+        def backtrack(index: int, curr_subset: List[int]) -> None:
             if index == len(nums):
                 res.append(curr_subset[:])
                 return
@@ -82,7 +80,7 @@ class Recursion:
         '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
         }
 
-        def backtrack(i: int, curr_combination: str) -> List[str]:
+        def backtrack(i: int, curr_combination: str) -> None:
             if i == len(digits):
                 res.append(curr_combination)
                 return
@@ -139,7 +137,7 @@ class Recursion:
         return res
 
     @staticmethod
-    def palindrome_decompositions(s: str) -> List[str]:
+    def palindrome_decompositions(s: str) -> List[List[str]]:
         res = []
         def backtrack(offset: int, partial_partition: List[str]) -> None:
             if offset == len(s):

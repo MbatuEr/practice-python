@@ -3,6 +3,9 @@ from typing import List
 
 
 class Array:
+    def __init__(self):
+        pass
+
     @staticmethod
     def dutch_national_flag(pivot: int, nums: List[int]) -> List[int]:
         low, mid, high = 0,0, len(nums) - 1
@@ -135,8 +138,9 @@ class Array:
     def offline_sandom_sampling(key: int, nums: List[int]) -> List[int]:
         random.shuffle(nums)
         nums[:] = nums[:key]
-        
-    def update_array_with_probabilities(self, size: int, input_array: List[int], probabilities: List[float]) ->List[int]:
+    
+    @staticmethod
+    def update_array_with_probabilities(size: int, input_array: List[int], probabilities: List[float]) ->List[int]:
         updated_array, counts = [], []
         counts = [round(prob*size) for prob in probabilities]
     
@@ -234,3 +238,55 @@ class Array:
     @staticmethod
     def is_rotation(s1: str, s2: str) -> bool:
         return len(s1) == len(s2) and s2 in (s1 + s1)
+    
+    @staticmethod
+    def triplet_sum(nums: List[int]) -> List[List[int]]:
+        triplets = []
+        nums.sort()
+        for i in range(len(nums)):
+            if nums[i] > 0:
+                break
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            def pair_sum_sorted_all_pairs(start: int, target: int) -> List[int]:
+                pairs = []
+                left, right = start, len(nums) - 1
+                while left < right:
+                    sum = nums[left] + nums[right]
+                    if sum == target:
+                        pairs.append([nums[left], nums[right]])
+                        left += 1
+                        while left < right and nums[left] == nums[left - 1]:
+                            left += 1
+                    elif sum < target:
+                        left += 1
+                    else:
+                        right -= 1
+                
+                return pairs
+
+            pairs = pair_sum_sorted_all_pairs(i + 1, -nums[i])
+            for pair in pairs:
+                triplets.append([nums[i]] + pair)
+            
+        return triplets
+    
+    @staticmethod
+    def largest_container(heights: List[int]) -> int:
+        max_water = 0
+        left, right = 0, len(heights) - 1
+        while left < right:
+            water = min(heights[left], heights[right]) * (right - left)
+            max_water = max(max_water, water)
+            if heights[left] < heights[right]:
+                left += 1
+            elif heights[left] > heights[right]:
+                right -= 1
+            else:
+                left += 1
+                right -= 1
+        
+        return max_water
+        
+        

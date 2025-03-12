@@ -154,3 +154,14 @@ if __name__ == "__main__":
     print("Is s2 a rotation of s1? ", is_substring)
     print("-" * 60)
     
+    # Triplet sum
+    input_nums = [0, -1, 2, -3, 1]
+    nums_samples = obj.triplet_sum(input_nums)
+    print(nums_samples)
+    print("-" * 60)
+
+    # Largest container
+    heights = [2, 7, 8, 3, 7, 6]
+    container = obj.largest_container(heights)
+    print("Largest containers area:", container)
+    print("-" * 60)

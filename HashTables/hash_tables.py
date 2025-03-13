@@ -1,5 +1,6 @@
 from collections import defaultdict, Counter
 from itertools import zip_longest
+from typing import List
 
 class HashTables:
     @staticmethod
@@ -154,3 +155,61 @@ class HashTables:
             seen.add(n)
             n = n // 2 if n % 2 == 0 else 3 * n + 1
         return True
+    
+    @staticmethod
+    def sudoku_board_validation(board: List[List[int]]) -> bool:
+        rows_sets = [set() for _ in range(9)]
+        cols_set = [set() for _ in range(9)]
+        subgrid_sets = [[set() for _ in range(3)] for _ in range(3)]
+        for r in range(9):
+            for c in range(9):
+                num = board[r][c]
+                if num == 0:
+                    continue
+                if num in rows_sets[r]:
+                    return False
+                if num in cols_set[c]:
+                    return False
+                if num in subgrid_sets[r // 3][c // 3]:
+                    return False
+                rows_sets[r].add(num)
+                cols_set[c].add(num)
+                subgrid_sets[r // 3][c // 3].add(num)
+        
+        return True
+    
+    @staticmethod
+    def zero_striping(matrix: List[List[int]]) -> None:
+        if not matrix or not matrix[0]:
+            return
+        
+        m, n = len(matrix), len(matrix[0])
+        first_row_has_zero = False
+        for c in range(n):
+            if matrix[0][c] == 0:
+                first_row_has_zero = True
+                break
+        
+        first_col_has_zero = False
+        for r in range(m):
+            if matrix[r][0] == 0:
+                first_col_has_zero = True
+                break
+        
+        for r in range(1, m):
+            for c in range(1, n):
+                if matrix[r][c] == 0:
+                    matrix[0][c] = 0
+                    matrix[r][0] = 0
+        
+        for r in range(1, m):
+            for c in range(1, n):
+                if matrix[0][c] == 0 or matrix[r][0] == 0:
+                    matrix[r][c] = 0
+        
+        if first_row_has_zero:
+            for c in range(n):
+                matrix[0][c] = 0
+        if first_col_has_zero:
+            for r in range(m):
+                matrix[r][0] = 0

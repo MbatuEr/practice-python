@@ -77,6 +77,39 @@ if __name__ == "__main__":
     print("-" * 60)
 
     # Collatz conjecture
-    n = 1000000
+    n = 100
     print(f"Collatz conjecture holds for all numbers up to {n}: {obj.test_collatz(n)}")
+    print("-" * 60)
+
+    # Sudoku validation
+    sudoku_board = [
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 2, 8, 0, 3, 0, 2, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+
+    is_valid = obj.sudoku_board_validation(sudoku_board)
+    if is_valid:
+        print("Sudoku board is valid")
+    else:
+        print("Sudoku board is not valid")
+    print("-" * 60)
+
+    # Zero striping
+    striping_matrix = [
+        [1, 2, 3, 4, 5],
+        [6, 0, 8, 9, 10],
+        [11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 0]
+    ]
+
+    obj.zero_striping(striping_matrix)
+    for i in range(len(striping_matrix)):
+        print(striping_matrix[i])
     print("-" * 60)

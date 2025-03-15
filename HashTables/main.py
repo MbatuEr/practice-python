@@ -113,3 +113,10 @@ if __name__ == "__main__":
     for i in range(len(striping_matrix)):
         print(striping_matrix[i])
     print("-" * 60)
+
+    # Geometric sequence triplets
+    geometric_inputs = [2, 1, 2, 4, 8, 8]
+    ratio = 2
+    number_of_triplets = obj.geometric_sequence_triplets(geometric_inputs, ratio)
+    print("The number of triplets:", number_of_triplets)
+    print("-" * 60)

@@ -1,5 +1,5 @@
 from linked_list import LinkedList
-from node import Node
+from node import Node, MultiLevelListNode
 
 if __name__ == "__main__":
     list = LinkedList()
@@ -17,14 +17,14 @@ if __name__ == "__main__":
         print(f"\n{k}th to last element is: {result}")
     except ValueError as e:
         print(f"Error: {e}")
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Delete middle node.
     print("Deleting middle node...")
     list.delete_middle_node()
     print("\nList after deleting middle node:")
     list.print_list()
-    print("-------------------------------------------------")    
+    print("-" * 60)    
 
     # Partition.
     print("Original list:")
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     list.partition(partition)
     print("\nList after partition:")
     list.print_list()
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Add numbers in reverse order.
     list1 = LinkedList()
@@ -53,13 +53,13 @@ if __name__ == "__main__":
     result = list.add_in_reverse_order(list1.head, list2.head)
     print("\nThe sum of the two lists in reverse order is:")
     result.print_list()
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Add numbers in forward order.
     result_forward = list.add_in_forward_order(list1.head, list2.head)
     print("The sum of the two lists in forward order is:")
     result_forward.print_list()
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Remove duplicates.
     print("Original list:")
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     list.remove_duplicates()
     print("\nList after removing duplicates:")
     list.print_list()
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Check if list is palindrome.
     list_palindrome = LinkedList()
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     list_palindrome.append(3)
 
     print("Is the list a Palindrome? " + ("Yes" if list_palindrome.is_palindrome() else "No"))
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Find the first intersection node.
     firstlist = Node(1)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         print(f"The first intersection node data is: {intersection.data}")
     else:
         print("No intersection found")
-    print("-------------------------------------------------")
+    print("-" * 60)
 
     # Find the loop node.
     loop_node = Node(1)
@@ -114,4 +114,32 @@ if __name__ == "__main__":
         print(f"The loop starts at node with data: {loop_start.data}")
     else:
         print("No loop detected") 
-    print("-------------------------------------------------")
+    print("-" * 60)
+
+    # Flatten linked list.
+    n1 = MultiLevelListNode(1)
+    n2 = MultiLevelListNode(2)
+    n3 = MultiLevelListNode(3)
+    n4 = MultiLevelListNode(4)
+    n5 = MultiLevelListNode(5)
+    n6 = MultiLevelListNode(6)
+    n7 = MultiLevelListNode(7)
+    n8 = MultiLevelListNode(8)
+
+    n1.next = n2
+    n2.next = n3
+    n3.next = n4
+    
+    n1.child = n5
+    n5.next = n6
+    n6.next = n7
+    n6.child = n8
+
+    flattened_head = list.flatten_multi_level_list(n1)
+
+    print("Flattened list:")
+    while flattened_head:
+        print(flattened_head.val, end=" -> ")
+        flattened_head = flattened_head.next
+    print("None")
+    print("-" * 60)

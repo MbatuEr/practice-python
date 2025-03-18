@@ -5,12 +5,14 @@ if __name__ == "__main__":
     obj = HashTables()
     # Unique characters
     input_string = "asdfghjkli"
-    print("All characters are unique." if obj.has_all_unique_characters(input_string) else "Not all characters are unique.")
+    print("All characters are unique." if obj.has_all_unique_characters(input_string) 
+          else "Not all characters are unique.")
     print("-" * 60)
 
     # Permutations
     perm1, perm2 = "aaasdfghjkli", "iaalkjsdfhga"
-    print("The strings are permutations of each other." if obj.are_permutations(perm1, perm2) else "The strings are not permutations of each other.")
+    print("The strings are permutations of each other." if obj.are_permutations(perm1, perm2) 
+          else "The strings are not permutations of each other.")
     print("-" * 60)
 
     # Palindrome permutation
@@ -33,14 +35,19 @@ if __name__ == "__main__":
     print("-" * 60)
 
     # Shortest sequential subarray
-    text = ["Given", "permutation", "string,", "write", "a", "palindrome", "to", "check", "if", "it", "is", "a", 
-            "palindrome", "of", "a", "permutation", "A", "check", "is", "a", "word", "or", "phrase", "that", "is", 
-            "the", "same", "forwards", "and", "backwards.", "A", "palindrome", "is", "just", "rearrangement", "of", 
-            "permutation", "The", "palindrome", "does", "not", "need", "to", "be", "limited", "to", "permutation", "just", "does"]
+    text = [
+        "Given", "permutation", "string,", "write", "a", "palindrome", "to", 
+        "check", "if", "it", "is", "a", "palindrome", "of", "a", "permutation", 
+        "A", "check", "is", "a", "word", "or", "phrase", "that", "is", "the", 
+        "same", "forwards", "and", "backwards.", "A", "palindrome", "is", "just", 
+        "rearrangement", "of", "permutation", "The", "palindrome", "does", "not", 
+        "need", "to", "be", "limited", "to", "permutation", "just", "does"
+    ]
     
     keywords = ["palindrome", "permutation"]
     start, end = obj.find_shortest_sequential_subarray(text, keywords)
-    print(f"Shortest subarray: {' '.join(text[start:end + 1])}" if start != -1 else "No subarray contains all the keywords.")
+    print(f"Shortest subarray: {' '.join(text[start:end + 1])}" if start != -1 
+          else "No subarray contains all the keywords.")
     print("-" * 60)
 
     # Longest subarray with distinct entries
@@ -119,4 +126,18 @@ if __name__ == "__main__":
     ratio = 2
     number_of_triplets = obj.geometric_sequence_triplets(geometric_inputs, ratio)
     print("The number of triplets:", number_of_triplets)
+    print("-" * 60)
+
+    # Substring anagrams
+    s = "caabab"
+    t = "aba"
+    anagrams = obj.substring_anagrams(s, t)
+    print("Number of anagrams", anagrams)
+    print("-" * 60)
+
+    # Longest uniform substring
+    input_s = "aabcdcca"
+    k = 2
+    substring_length = obj.longest_uniform_substring(input_s, k)
+    print(f"Length of the longest uniform substring: {substring_length}")
     print("-" * 60)

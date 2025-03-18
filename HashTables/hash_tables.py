@@ -229,3 +229,44 @@ class HashTables:
             left_map[x] += 1
         
         return count
+    
+    @staticmethod
+    def substring_anagrams(s: str, t: str) -> int:
+        if len(t) > len(s):
+            return 0
+        
+        expected_freqs = Counter(t)
+        window_freqs = Counter(s[:len(t) - 1])
+        count = 0
+
+        for right in range(len(t) - 1, len(s)):
+            window_freqs[s[right]] += 1
+            if window_freqs == expected_freqs:
+                count += 1
+            
+            left_char = s[right - len(t) + 1]
+            window_freqs[left_char] -= 1
+            if window_freqs[left_char] == 0:
+                del window_freqs[left_char]
+
+        return count
+    
+    @staticmethod
+    def longest_uniform_substring(s: str, k: int) -> int:
+        freqs = {}
+        highest_freq = max_len = 0
+        left = 0
+        
+        for right in range(len(s)):
+            freqs[s[right]] = freqs.get(s[right], 0) + 1
+            highest_freq = max(highest_freq, freqs[s[right]])
+            
+            num_chars_to_replace = (right - left + 1) - highest_freq
+            if num_chars_to_replace > k:
+                freqs[s[left]] -= 1
+                left += 1
+                
+            max_len = max(max_len, (right - left + 1))
+            right += 1
+        
+        return max_len

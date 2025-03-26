@@ -224,3 +224,11 @@ if __name__ == "__main__":
     # Level order tree traversal
     tree_order.level_order_traversal()
     print("-" * 60)
+
+    # Lower and upper bounds in binary search
+    nums  = [1, 2, 3, 4, 4, 4, 5, 6, 7, 8, 9, 10, 11]
+    target_value = 4
+    bounds = tree.first_and_last_occurence(nums, target_value)
+    print("Lower bound:", bounds[0])
+    print("Upper bound:", bounds[1])
+    print("-" * 60)

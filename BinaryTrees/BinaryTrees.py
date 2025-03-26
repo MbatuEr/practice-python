@@ -54,7 +54,8 @@ class BinaryTree:
             if key == node.val:
                 return True
             
-            return lookup_helper(node.left, key) if key < node.val else lookup_helper(node.right, key)
+            return (lookup_helper(node.left, key) if key < node.val else 
+                    lookup_helper(node.right, key))
     
         return lookup_helper(self.root, key)
   
@@ -131,7 +132,8 @@ class BinaryTree:
         
         return dfs(root, 0)
 
-    def has_path_weight(self, node: TreeNode, target_weight: int, current_weight: int) -> bool:
+    def has_path_weight(self, node: TreeNode, target_weight: int, 
+                        current_weight: int) -> bool:
         if not node:
             return False
         
@@ -225,7 +227,8 @@ class BinaryTree:
     def build_tree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         in_map = {val: idx for idx, val in enumerate(inorder)}
 
-        def build_tree_helper(pre_start: int, pre_end: int, in_start: int, in_end: int) -> TreeNode:
+        def build_tree_helper(pre_start: int, pre_end: int, 
+                              in_start: int, in_end: int) -> TreeNode:
             if pre_start > pre_end or in_start > in_end:
                 return None
 
@@ -235,8 +238,10 @@ class BinaryTree:
             root_index = in_map[root_val]
             left_subtree_size = root_index - in_start
 
-            root.left = build_tree_helper(pre_start + 1, pre_start + left_subtree_size, in_start, root_index - 1)
-            root.right = build_tree_helper(pre_start + left_subtree_size + 1, pre_end, root_index + 1, in_end)
+            root.left = build_tree_helper(pre_start + 1, pre_start + 
+                                          left_subtree_size, in_start, root_index - 1)
+            root.right = build_tree_helper(pre_start + left_subtree_size + 1, pre_end, 
+                                           root_index + 1, in_end)
 
             return root
 
@@ -475,3 +480,35 @@ class BinaryTree:
             
             print(" ".join(map(str, current_level)))
             
+    def first_and_last_occurence(self, nums: List[int], target: int) -> List[int]:
+        lower_bound = self.lower_bound_binary_search(nums, target)
+        upper_bound = self.upper_bound_binary_search(nums, target)
+        return [lower_bound, upper_bound]
+    
+    @staticmethod
+    def lower_bound_binary_search(nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+            else:
+                right = mid
+
+        return left if nums and nums[left] == target else -1
+    
+    @staticmethod
+    def upper_bound_binary_search(nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right) // 2 + 1
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+            else:
+                left = mid
+
+        return right if nums and nums[right] == target else -1

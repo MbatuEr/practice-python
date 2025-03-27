@@ -232,3 +232,14 @@ if __name__ == "__main__":
     print("Lower bound:", bounds[0])
     print("Upper bound:", bounds[1])
     print("-" * 60)
+
+    # Binary search in matrix
+    matrix = [
+        (2, 3, 4, 6), 
+        (7, 10, 11, 17), 
+        (20, 21, 24, 33)
+    ]
+    target = 21
+    in_matrix = tree.matrix_search(matrix, target)
+    print(f"Is target value {target} in the matrix: {in_matrix}")
+    print("-" * 60)

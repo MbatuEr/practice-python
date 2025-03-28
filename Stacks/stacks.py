@@ -110,3 +110,39 @@ class Stacks:
             stack.append(i)
 
         return list(reversed(stack))
+    
+    @staticmethod
+    def next_larger_number_to_the_right(nums: List[int]) -> List[int]:
+        res = [0] * len(nums)
+        stack = []
+        for i in range(len(nums) - 1, -1, -1):
+            while stack and stack[-1] <= nums[i]:
+                stack.pop()
+            
+            res[i] = stack[-1] if stack else -1
+            stack.append(nums[i])
+        
+        return res
+    
+    @staticmethod
+    def evaluate_expression(s: str) -> int:
+        stack = []
+        curr_num, sign, res = 0, 1, 0
+        for c in s:
+            if c.isdigit():
+                curr_num = curr_num * 10 + int(c)
+            elif c == '+' or c == '-':
+                res += curr_num * sign
+                sign = -1 if c == '-' else 1
+                curr_num = 0
+            elif c == '(':
+                stack.append(res)
+                stack.append(sign)
+                res, sign = 0, 1
+            elif c == ')':
+                res += sign * curr_num
+                res *= stack.pop()
+                res += stack.pop()
+                curr_num = 0
+        
+        return res + curr_num * sign

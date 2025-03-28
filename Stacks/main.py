@@ -40,3 +40,15 @@ if __name__ == "__main__":
     buildings = [7, 4, 8, 2, 9]
     print("Buildings with sunset views:", [buildings[i] for i in st.find_buildings_with_sunset_view(buildings)])
     print("-" * 50)
+
+    # Next larger number
+    nums = [5, 2, 4, 6, 1]
+    res = st.next_larger_number_to_the_right(nums)
+    print("Next larger number:", res)
+    print("-" * 50)
+
+    # Evaulating mathematical expression
+    s = "18 -(7 + (2 - 4))"
+    result = st.evaluate_expression(s)
+    print(f"The result is: {result}")
+    print("-" * 50)

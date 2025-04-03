@@ -67,3 +67,13 @@ if __name__ == "__main__":
     print(result, end=" ")
     print()
     print("-" * 60)
+
+    # Combine linked list
+    list1 = pq.create_linked_list([1, 4, 5])
+    list2 = pq.create_linked_list([1, 3, 4])
+    list3 = pq.create_linked_list([2, 6])
+
+    lists = [list1, list2, list3]
+    merged_head = pq.combine_sorted_linked_lists(lists)
+    print(merged_head) 
+    print("-" * 60)

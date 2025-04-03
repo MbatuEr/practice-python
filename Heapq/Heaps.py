@@ -34,6 +34,14 @@ class Pair:
             return self.str > other.str
         return self.freq < other.freq
 
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return f"{self.val} -> {self.next}" if self.next else f"{self.val}"
+
 class Heapq:
     def __init__(self):
         self.min_heap = []
@@ -127,3 +135,35 @@ class Heapq:
         
         res = [heapq.heappop(self.min_heap).str for _ in range(k)]
         return res
+    
+    @staticmethod
+    def combine_sorted_linked_lists(lists: list[ListNode]) -> ListNode:
+        ListNode.__lt__ = lambda self, other : self.val < other.val
+        heap = []
+        for head in lists:
+            if head:
+                heapq.heappush(heap, head)
+
+        dummy = ListNode(-1)
+        curr = dummy
+        while heap:
+            smallest_node = heapq.heappop(heap)
+            curr.next = smallest_node
+            curr = curr.next
+            if smallest_node.next:
+                heapq.heappush(heap, smallest_node.next)
+        
+        return dummy.next
+    
+    @staticmethod
+    def create_linked_list(lst):
+        if not lst:
+            return None
+        
+        head = ListNode(lst[0])
+        curr = head
+        for val in lst[1:]:
+            curr.next = ListNode(val)
+            curr = curr.next
+            
+        return head

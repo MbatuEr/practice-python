@@ -141,3 +141,10 @@ if __name__ == "__main__":
     substring_length = obj.longest_uniform_substring(input_s, k)
     print(f"Length of the longest uniform substring: {substring_length}")
     print("-" * 60)
+
+    # K-sum subarrays
+    nums = [1, 2, -1, 1, 2]
+    key_num = 3
+    subarray_num = obj.k_sum_subarrays(nums, key_num)
+    print("The number of subarrays:", subarray_num)
+    print("-" * 60)
